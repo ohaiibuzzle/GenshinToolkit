@@ -1,4 +1,4 @@
-# GSToolkit
+# GenshinToolkit
 
 Imagine getting **SO BORED** that you reimplemented the whole Genshin Launcher in WPF
 
