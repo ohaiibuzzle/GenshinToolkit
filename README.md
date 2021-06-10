@@ -8,3 +8,14 @@ Comes with:
 - Does not even remember your settings!
 
 Anyway, prebuilt in [Releases](https://github.com/ohaiibuzzle/GSToolkit/releases)
+
+```c#
+using Buzzle.Disclaimer;
+/*
+I am not responsible for bricked devices, dead installations,
+thermonuclear war, or you getting fired because the Windows 
+crashes in the middle of your Zoom call.
+
+Genshin Impact belongs to miHoYo
+*/
+```
