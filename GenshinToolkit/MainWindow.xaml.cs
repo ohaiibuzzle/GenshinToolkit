@@ -88,8 +88,10 @@ namespace GenshinToolkit
 
                         if (play_custom_res_chk.IsChecked == true)
                         {
-                            launchArgs.Append("-screen-width " + play_w_textbox + "-screen-height " + play_h_textbox);
+                            launchArgs.Append("-screen-width " + play_w_textbox.Text + " -screen-height " + play_h_textbox.Text);
                         }
+
+                        Console.WriteLine(launchArgs.ToString().TrimEnd());
 
                         Process.Start(file, launchArgs.ToString().TrimEnd());
 
