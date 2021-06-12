@@ -5,21 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="Buzzle's Genshin Toolkit" Height="450" Width="800" ResizeMode="CanMinimize">
+        Title="Buzzle's Genshin Toolkit" Height="480" Width="800" ResizeMode="CanMinimize">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="115*"/>
-            <RowDefinition Height="306*"/>
+            <RowDefinition/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="385" VerticalAlignment="Top" Width="792" Margin="0,34,0,0" Grid.RowSpan="2">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="417" VerticalAlignment="Top" Width="792" Margin="0,34,0,0" Grid.RowSpan="2">
             <TabItem Header="Download">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="393"/>
                         <ColumnDefinition Width="393"/>
                     </Grid.ColumnDefinitions>
-                    <ProgressBar x:Name="Download_progbar" HorizontalAlignment="Left" Height="25" Margin="52,231,0,0" VerticalAlignment="Top" Width="689" Grid.ColumnSpan="2"/>
-                    <Button x:Name="Download_btn" Content="Do it!" HorizontalAlignment="Left" Height="56" Margin="272,296,0,0" VerticalAlignment="Top" Width="244" Grid.ColumnSpan="2" Click="Download_btn_click"/>
+                    <ProgressBar x:Name="Download_progbar" HorizontalAlignment="Left" Height="25" Margin="52,241,0,0" VerticalAlignment="Top" Width="689" Grid.ColumnSpan="2"/>
+                    <Button x:Name="Download_btn" Content="Do it!" HorizontalAlignment="Left" Height="51" Margin="272,315,0,0" VerticalAlignment="Top" Width="244" Grid.ColumnSpan="2" Click="Download_btn_click"/>
                     <Grid Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="221" Margin="10,10,0,0" VerticalAlignment="Top" Width="766">
                         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="201" Margin="10,10,0,0" VerticalAlignment="Top" Width="350">
                             <Grid>
@@ -42,30 +41,42 @@
                             </Grid>
                         </Border>
                     </Grid>
-                    <Label x:Name="Download_ProgLabel" Content="Waiting..." HorizontalAlignment="Left" Margin="52,261,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Width="689" Grid.ColumnSpan="2" Height="30"/>
+                    <Label x:Name="Download_ProgLabel" Content="Waiting..." HorizontalAlignment="Left" Margin="52,0,0,88" HorizontalContentAlignment="Center" Width="689" Grid.ColumnSpan="2" Height="30" VerticalAlignment="Bottom"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Fix">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" VerticalAlignment="Top" Margin="0,0,0,-1" Height="390">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <CheckBox x:Name="fix_rem_tmp_chk" Content="Delete temporary download files" HorizontalAlignment="Left" Margin="267,126,0,0" VerticalAlignment="Top" Width="254"/>
-                    <ComboBox x:Name="fixVersion_cb" HorizontalAlignment="Left" Margin="401,94,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
-                    <Label x:Name="label1" Content="Current Game Version:" HorizontalAlignment="Left" Margin="267,94,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="fix_rewrite_config_chk" Content="Rewrite config.ini" HorizontalAlignment="Left" Height="20" Margin="267,166,0,0" VerticalAlignment="Top" Width="254" IsChecked="True"/>
-                    <Button x:Name="fix_button" Content="Do it!" HorizontalAlignment="Left" Height="60" Margin="267,201,0,0" VerticalAlignment="Top" Width="250" Click="fix_button_Click"/>
-                    <CheckBox x:Name="fix_remove_deprecated" Content="Remove deprecated (old) update files" HorizontalAlignment="Left" Margin="267,146,0,0" VerticalAlignment="Top" Width="254"/>
+                    <CheckBox x:Name="fix_rem_tmp_chk" Content="Delete temporary download files" HorizontalAlignment="Left" Margin="267,106,0,0" VerticalAlignment="Top" Width="254"/>
+                    <ComboBox x:Name="fixVersion_cb" HorizontalAlignment="Left" Margin="401,74,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
+                    <Label x:Name="fix_gameversion_lbl" Content="Current Game Version:" HorizontalAlignment="Left" Margin="267,74,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="fix_rewrite_config_chk" Content="Rewrite config.ini" HorizontalAlignment="Left" Height="20" Margin="267,186,0,0" VerticalAlignment="Top" Width="254" IsChecked="True"/>
+                    <Button x:Name="fix_button" Content="Do it!" HorizontalAlignment="Left" Height="60" Margin="267,223,0,0" VerticalAlignment="Top" Width="250" Click="fix_button_Click"/>
+                    <CheckBox x:Name="fix_remove_deprecated" Content="Remove deprecated (old) update files" HorizontalAlignment="Left" Margin="267,126,0,0" VerticalAlignment="Top" Width="254"/>
+                    <CheckBox x:Name="fix_resetSettings_chk" Content="Reset game settings (Clear registry keys)" HorizontalAlignment="Left" Margin="267,146,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="fix_delete_gamedata" Content="Delete temporary game data" HorizontalAlignment="Left" Margin="267,166,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Play">
-                <Grid Background="#FFE5E5E5" Height="357" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Top" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button x:Name="LaunchBtn" Content="Launch!" HorizontalAlignment="Left" Height="60" Margin="267,201,0,0" VerticalAlignment="Top" Width="250" Click="LaunchBtn_Click" RenderTransformOrigin="0.5,0.5"/>
                     <CheckBox x:Name="graphicsConfigChk" Content="Open Graphics Configuration" HorizontalAlignment="Left" Margin="267,136,0,0" VerticalAlignment="Top" Width="250"/>
                     <CheckBox x:Name="closeAppChk" Content="Close this app" HorizontalAlignment="Left" Margin="267,156,0,0" VerticalAlignment="Top" Width="250"/>
+                    <CheckBox x:Name="play_borderless_chk" Content="Open in a borderless window" HorizontalAlignment="Left" Margin="267,116,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.133"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Misc. Tools">
+                <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Top" Margin="0,0,0,0">
+                    <Button x:Name="misc_reset_network" Content="Reset Windows Networking" HorizontalAlignment="Left" Margin="262,161,0,0" VerticalAlignment="Top" Width="270" Click="misc_reset_network_Click"/>
+                    <Button x:Name="misc_dump_dxdiag" Content="Dump system DirectX info" HorizontalAlignment="Left" Height="20" Margin="262,186,0,0" VerticalAlignment="Top" Width="270" Click="misc_dump_dxdiag_Click"/>
+                    <Button x:Name="misc_msvc_install" Content="Reinstall MSVC Runtime" HorizontalAlignment="Left" Margin="262,211,0,0" VerticalAlignment="Top" Width="270" Click="misc_msvc_install_Click"/>
+                    <Button x:Name="misc_reinstall_DirectX" Content="Reinstall DirectX Runtime" HorizontalAlignment="Left" Margin="262,236,0,0" VerticalAlignment="Top" Width="270" Click="misc_reinstall_DirectX_Click"/>
+
                 </Grid>
             </TabItem>
         </TabControl>

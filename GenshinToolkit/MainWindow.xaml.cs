@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -23,7 +25,7 @@ namespace GenshinToolkit
 
             if (Tools.getVersionInfoGH() != true)
             {
-                MessageBox.Show("Cannot check for version updates... :(", "Cannot Connect");
+                MessageBox.Show("Cannot check for version updates... :(", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Windows.Forms.Application.Exit();
             }
             init_comboboxes();
@@ -61,7 +63,7 @@ namespace GenshinToolkit
         {
             if (!Directory.Exists(GameDirBox.Text))
             {
-                MessageBox.Show("Make sure you set the correct directory...", "Can't find anything :(");
+                MessageBox.Show("Make sure you set the correct directory...", "Can't find anything :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -72,13 +74,19 @@ namespace GenshinToolkit
                     {
                         Console.WriteLine("Go!");
 
-                        string launchArgs = "";
-                        if (graphicsConfigChk.IsChecked == true)
+                        StringBuilder launchArgs = new StringBuilder();
+
+                        if (play_borderless_chk.IsChecked == true)
                         {
-                            launchArgs += "-show-screen-selector";
+                            launchArgs.Append("-popupwindow ");
                         }
 
-                        Process.Start(file, launchArgs);
+                        if (graphicsConfigChk.IsChecked == true)
+                        {
+                            launchArgs.Append("-show-screen-selector ");
+                        }
+
+                        Process.Start(file, launchArgs.ToString().TrimEnd());
 
                         if (closeAppChk.IsChecked == true) Close();
 
@@ -86,7 +94,7 @@ namespace GenshinToolkit
                     }
                 }
 
-                MessageBox.Show("Cannot find GenshinImpact.exe", "No launchbox :(");
+                MessageBox.Show("Cannot find GenshinImpact.exe", "No launchbox :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -117,30 +125,9 @@ namespace GenshinToolkit
                 Download_ProgLabel.Content = "Downloading support tools";
             });
 
-            if (!File.Exists("aria2c.exe"))
+            if (Tools.check_download_Aria()!=true || Tools.check_download_7z() != true)
             {
-                if (Tools.getAria2() == true)
-                {
-                    ;
-                }
-                else
-                {
-                    MessageBox.Show("Cannot get Aria2", "Network Error!");
-                    return;
-                }
-            }
-
-            if (!File.Exists("7za.exe"))
-            {
-                if (Tools.get7z() == true)
-                {
-                    ;
-                }
-                else
-                {
-                    MessageBox.Show("Cannot get 7zip", "Network Error!");
-                    return;
-                }
+                MessageBox.Show("Cannot get support tools :(", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             (sender as BackgroundWorker).ReportProgress(5);
@@ -283,6 +270,13 @@ namespace GenshinToolkit
             process.WaitForExit();
             return process.ExitCode;
         }
+        private int startAria2download(string md5, string link)
+        {
+            var aria2args = "-x16 -j16 -k 1M" + " -Vtrue --checksum=md5=" + md5 + " " + link;
+            var process = Process.Start("aria2c.exe", aria2args);
+            process.WaitForExit();
+            return process.ExitCode;
+        }
 
         private void CurrentVersion_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -329,7 +323,7 @@ namespace GenshinToolkit
             var deprList = Tools.getDeprecatedList();
             if (!Directory.Exists(GameDirBox.Text))
             {
-                MessageBox.Show("Make sure you set the correct directory...", "Can't find anything :(");
+                MessageBox.Show("Make sure you set the correct directory...", "Can't find anything :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             else
             {
@@ -361,13 +355,76 @@ namespace GenshinToolkit
                         }
                     }
                 }
+
+                if (fix_resetSettings_chk.IsChecked == true)
+                {
+                    Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\miHoYo");
+                    Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\miHoYoSDK");
+                }
+
+                if (fix_delete_gamedata.IsChecked == true)
+                {
+                    var localAppData_mhy = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "miHoYo");
+                    Console.WriteLine(localAppData_mhy);
+                    Directory.Delete(localAppData_mhy, true);
+
+                    string localLowAppData_mhy = @"%UserProfile%\AppData\LocalLow\miHoYo";
+                    localLowAppData_mhy = Environment.ExpandEnvironmentVariables(localLowAppData_mhy);
+                    Console.WriteLine(localLowAppData_mhy);
+                    Directory.Delete(localLowAppData_mhy, true);
+
+                }
+
                 if (fix_rewrite_config_chk.IsChecked == true)
                 {
                     Tools.WriteConfigIni(fixVersion_cb.Text, GameDirBox.Text + "/config.ini");
                 }
+                MessageBox.Show("Success. Try starting your game now", "Done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
+        private void misc_reset_network_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("ipconfig", "/release").WaitForExit();
+            Process.Start("ipconfig", "/renew").WaitForExit();
+            Process.Start("ipconfig", "/flushdns").WaitForExit();
+            MessageBox.Show("Successfully reset Windows networking", "Done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void misc_dump_dxdiag_Click(object sender, RoutedEventArgs e)
+        {
+            Process.Start("dxdiag", "/t sysinfo.txt").WaitForExit();
+            MessageBox.Show("System info has been dumped to sysinfo.txt", "Done!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void misc_msvc_install_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tools.check_download_Aria() != true)
+            {
+                MessageBox.Show("Cannot get support tools :(", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                startAria2download("FB1CB75F59D98B5D1E1E31476CBE6F61", "https://aka.ms/vs/16/release/vc_redist.x64.exe");
+                Process.Start("vc_redist.x64.exe");
+            }
+        }
+
+        private void misc_reinstall_DirectX_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tools.check_download_Aria() != true || Tools.check_download_7z() != true)
+            {
+                MessageBox.Show("Cannot get support tools :(", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                startAria2download("CA2AC3835D7D7DA6CB8624FEFB177083", "https://autopatchhk.yuanshen.com/client_app/plugins/DXSETUP.zip");
+                Process.Start("7za.exe", "x DXSETUP.zip").WaitForExit();
+                Process.Start("DXSETUP\\DXSETUP.exe");
+            }
+        }
     }
     public static class ProgressBarExtensions
     {

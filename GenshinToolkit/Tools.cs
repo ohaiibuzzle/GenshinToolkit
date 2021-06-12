@@ -76,6 +76,46 @@ namespace GenshinToolkit
             }
         }
 
+        static public bool? check_download_Aria()
+        {
+            if (!File.Exists("aria2c.exe"))
+            {
+                if (Tools.getAria2() == true)
+                {
+                    File.Delete("aria.zip");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        static public bool? check_download_7z()
+        {
+            if (!File.Exists("7za.exe"))
+            {
+                if (Tools.get7z() == true)
+                {
+                    File.Delete("7z.zip");
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         static public string CalcMD5(string filename)
         {
             using (var md5 = MD5.Create())
