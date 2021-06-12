@@ -78,7 +78,7 @@ namespace GenshinToolkit
 
                         if (play_borderless_chk.IsChecked == true)
                         {
-                            launchArgs.Append("-popupwindow ");
+                            launchArgs.Append("-popupwindow -screen-fullscreen 0");
                         }
 
                         if (graphicsConfigChk.IsChecked == true)
@@ -86,16 +86,35 @@ namespace GenshinToolkit
                             launchArgs.Append("-show-screen-selector ");
                         }
 
+                        if (play_custom_res_chk.IsChecked == true)
+                        {
+                            launchArgs.Append("-screen-width " + play_w_textbox + "-screen-height " + play_h_textbox);
+                        }
+
                         Process.Start(file, launchArgs.ToString().TrimEnd());
 
                         if (closeAppChk.IsChecked == true) Close();
 
-                        break;
+                        return;
                     }
                 }
 
                 MessageBox.Show("Cannot find GenshinImpact.exe", "No launchbox :(", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void play_custom_res_chk_Checked(object sender, RoutedEventArgs e)
+        {
+            play_custom_res_grid.Visibility = Visibility.Visible;
+            play_custom_res_grid.IsEnabled = true;
+            play_w_textbox.Text = SystemParameters.PrimaryScreenWidth.ToString();
+            play_h_textbox.Text = SystemParameters.PrimaryScreenHeight.ToString();
+        }
+
+        private void play_custom_res_chk_Unchecked(object sender, RoutedEventArgs e)
+        {
+            play_custom_res_grid.Visibility = Visibility.Hidden;
+            play_custom_res_grid.IsEnabled = false;
         }
 
         private void Download_btn_click(object sender, RoutedEventArgs e)
@@ -425,6 +444,7 @@ namespace GenshinToolkit
                 Process.Start("DXSETUP\\DXSETUP.exe");
             }
         }
+
     }
     public static class ProgressBarExtensions
     {
