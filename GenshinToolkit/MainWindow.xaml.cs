@@ -286,14 +286,14 @@ namespace GenshinToolkit
 
         private int startAria2download(string path, string md5, string link)
         {
-            var aria2args = "-x16 -j16 -k 1M -d " + path + " -Vtrue --checksum=md5=" + md5 + " " + link;
+            var aria2args = "-x16 -j16 -s16 -k 1M -d " + path + " -Vtrue --checksum=md5=" + md5 + " " + link;
             var process = Process.Start("aria2c.exe", aria2args);
             process.WaitForExit();
             return process.ExitCode;
         }
         private int startAria2download(string md5, string link)
         {
-            var aria2args = "-x16 -j16 -k 1M" + " -Vtrue --checksum=md5=" + md5 + " " + link;
+            var aria2args = "-x16 -j16 -s16 -k 1M" + " -Vtrue --checksum=md5=" + md5 + " " + link;
             var process = Process.Start("aria2c.exe", aria2args);
             process.WaitForExit();
             return process.ExitCode;
