@@ -29,6 +29,9 @@ namespace GenshinToolkit
                 System.Windows.Forms.Application.Exit();
             }
             init_comboboxes();
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += update_server_status;
+            worker.RunWorkerAsync();
         }
 
         private void Browsebutton_Click(object sender, RoutedEventArgs e)
@@ -445,6 +448,40 @@ namespace GenshinToolkit
                 Process.Start("7za.exe", "x DXSETUP.zip").WaitForExit();
                 Process.Start("DXSETUP\\DXSETUP.exe");
             }
+        }
+
+        private void misc_checkGameFileHashes_Click(object sender, RoutedEventArgs e)
+        {
+            FileCheckerWindow fc = new FileCheckerWindow(GameDirBox.Text);
+            fc.Show();
+        }
+
+        private void play_refreshStatus_btn_Click(object sender, RoutedEventArgs e)
+        {
+            BackgroundWorker worker = new BackgroundWorker();
+            worker.DoWork += update_server_status;
+
+            worker.RunWorkerAsync();
+        }
+
+        private void update_server_status(object sender, DoWorkEventArgs e)
+        {
+            var status = Tools.serverInfo();
+            this.Dispatcher.Invoke(() =>
+            {
+                play_as_status_chk.IsChecked = status.AS_Status;
+                play_as_status_chk.Content = status.AS_Ping + " ms";
+
+                play_eu_status_chk.IsChecked = status.EU_Status;
+                play_eu_status_chk.Content = status.EU_Ping + " ms";
+
+                play_na_status_chk.IsChecked = status.NA_Status;
+                play_na_status_chk.Content = status.NA_Ping + " ms";
+
+                play_tw_status_chk.IsChecked = status.TW_Status;
+                play_tw_status_chk.Content = status.TW_Ping + " ms";
+
+            });
         }
 
     }

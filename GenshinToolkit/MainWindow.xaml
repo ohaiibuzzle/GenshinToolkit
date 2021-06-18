@@ -79,6 +79,16 @@
                         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,1,0,0" TextWrapping="Wrap" Text="Height:" VerticalAlignment="Top" Height="22" Width="61" Grid.Column="1" FontSize="14"/>
                         <TextBox x:Name="play_h_textbox" HorizontalAlignment="Left" Height="23" Margin="76,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49" Grid.Column="1"/>
                     </Grid>
+                    <CheckBox x:Name="play_as_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="168,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
+                    <CheckBox x:Name="play_eu_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="328,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
+                    <CheckBox x:Name="play_na_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="490,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
+                    <CheckBox x:Name="play_tw_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="651,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
+                    <TextBlock x:Name="play_as_status_lbl" HorizontalAlignment="Left" Margin="114,349,0,0" TextWrapping="Wrap" Text="Asia:" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="play_eu_status_lbl" HorizontalAlignment="Left" Margin="274,349,0,0" TextWrapping="Wrap" Text="Europe:" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="play_na_status_lbl" HorizontalAlignment="Left" Margin="436,349,0,0" TextWrapping="Wrap" Text="NA:" VerticalAlignment="Top" RenderTransformOrigin="0.466,1.942"/>
+                    <TextBlock x:Name="play_tw_status_lbl" HorizontalAlignment="Left" Margin="597,348,0,0" TextWrapping="Wrap" Text="SAR:" VerticalAlignment="Top"/>
+                    <TextBlock x:Name="statusText" HorizontalAlignment="Left" Margin="17,348,0,0" TextWrapping="Wrap" Text="Server Status:" VerticalAlignment="Top"/>
+                    <Button x:Name="play_refreshStatus_btn" Content="🔄" HorizontalAlignment="Left" Margin="742,346,0,0" VerticalAlignment="Top" Click="play_refreshStatus_btn_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Misc. Tools">
@@ -87,6 +97,7 @@
                     <Button x:Name="misc_dump_dxdiag" Content="Dump system DirectX info" HorizontalAlignment="Left" Height="20" Margin="267,131,0,0" VerticalAlignment="Top" Width="270" Click="misc_dump_dxdiag_Click"/>
                     <Button x:Name="misc_msvc_install" Content="Reinstall MSVC Runtime" HorizontalAlignment="Left" Margin="267,156,0,0" VerticalAlignment="Top" Width="270" Click="misc_msvc_install_Click"/>
                     <Button x:Name="misc_reinstall_DirectX" Content="Reinstall DirectX Runtime" HorizontalAlignment="Left" Margin="267,181,0,0" VerticalAlignment="Top" Width="270" Click="misc_reinstall_DirectX_Click"/>
+                    <Button x:Name="misc_checkGameFileHashes" Content="Check game files hashes" HorizontalAlignment="Left" Margin="267,206,0,0" VerticalAlignment="Top" Width="270" Click="misc_checkGameFileHashes_Click"/>
 
                 </Grid>
             </TabItem>

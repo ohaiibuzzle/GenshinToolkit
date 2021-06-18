@@ -60,5 +60,10 @@ namespace GenshinToolkit {
         public Data data;
     }
 
-
+    public class FileHashInfo
+    {
+        public string remoteName;
+        public string md5;
+        public int fileSize;
+    }
 }

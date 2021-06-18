@@ -8,6 +8,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,7 +52,7 @@ namespace GenshinToolkit
                     }
                 }
                 return false;
-                
+
             }
         }
 
@@ -125,9 +126,21 @@ namespace GenshinToolkit
                     var hash = md5.ComputeHash(stream);
                     return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
                 }
-                }
+            }
         }
-        
+
+        public static bool CompareMD5Async(string filename, string correct_MD5)
+        {
+            using (var md5 = MD5.Create())
+            {
+                using (var stream = File.OpenRead(filename))
+                {
+                    var hash = md5.ComputeHash(stream);
+                    return correct_MD5 == BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+                }
+            }
+        }
+
         public static List<string> getDeprecatedList()
         {
             VersionInfoJSON versionData = Tools.DeserializeVersionInfoJSON("versioninfo.json");
@@ -177,7 +190,7 @@ namespace GenshinToolkit
                     isDone = true;
                 }
             }
-        if (!isDone)
+            if (!isDone)
             {
                 {
                     this_version.version = versionData.data.game.latest.version;
@@ -233,17 +246,89 @@ namespace GenshinToolkit
 
         public static bool getVersionInfoGH()
         {
-            try {
+            try
+            {
                 using (var client = new WebClient())
                 {
                     client.DownloadFile("https://raw.githubusercontent.com/ohaiibuzzle/GSToolkit/senpai/static/versioninfo.json", "versioninfo.json");
                     return true;
-                } 
+                }
             }
             catch (WebException)
             {
                 return false;
             }
+        }
+
+
+        public static Servers serverInfo()
+        {
+            var servers = new Servers();
+            {
+                Ping pinger = new Ping();
+                byte[] packet = new byte[64];
+                var res = (HttpWebResponse)WebRequest.Create(servers.AS_Uri + "/query_cur_region").GetResponse();
+                if ((int)res.StatusCode == 200)
+                {
+                    servers.AS_Status = true;
+                    try
+                    {
+                        var reply = pinger.Send(servers.AS_Ping_Addr, 10000, packet);
+                        servers.AS_Ping = reply.RoundtripTime;
+                    }
+                    catch (PingException)
+                    {
+                        servers.AS_Ping = -1;
+                    }
+                }
+
+                res = (HttpWebResponse)WebRequest.Create(servers.TW_Uri + "/query_cur_region").GetResponse();
+                if ((int)res.StatusCode == 200)
+                {
+                    servers.TW_Status = true;
+                    try
+                    {
+                        var reply = pinger.Send(servers.TW_Ping_Addr, 10000, packet);
+                        servers.TW_Ping = reply.RoundtripTime;
+                    }
+                    catch (PingException)
+                    {
+                        servers.TW_Ping = -1;
+                    }
+                }
+
+                res = (HttpWebResponse)WebRequest.Create(servers.EU_Uri + "/query_cur_region").GetResponse();
+                if ((int)res.StatusCode == 200)
+                {
+                    servers.EU_Status = true;
+                    try
+                    {
+                        var reply = pinger.Send(servers.EU_Ping_Addr, 10000, packet);
+                        servers.EU_Ping = reply.RoundtripTime;
+                    }
+                    catch (PingException)
+                    {
+                        servers.EU_Ping = -1;
+                    }
+                }
+
+                res = (HttpWebResponse)WebRequest.Create(servers.NA_Uri + "/query_cur_region").GetResponse();
+                if ((int)res.StatusCode == 200)
+                {
+                    servers.NA_Status = true;
+                    try
+                    {
+                        var reply = pinger.Send(servers.NA_Ping_Addr, 10000, packet);
+                        servers.NA_Ping = reply.RoundtripTime;
+                    }
+                    catch (PingException)
+                    {
+                        servers.NA_Ping = -1;
+                    }
+                }
+            }
+
+            return servers;
         }
     }
     public class VersionDownloadInfo
@@ -261,5 +346,28 @@ namespace GenshinToolkit
         public string jp_vo_pack_md5;
         public string cn_vo_pack_md5;
         public string ko_vo_pack_md5;
+    }
+
+    public class Servers
+    {
+        public string AS_Uri = "https://osasiadispatch.yuanshen.com";
+        public string TW_Uri = "https://oschtdispatch.yuanshen.com";
+        public string EU_Uri = "https://oseurodispatch.yuanshen.com";
+        public string NA_Uri = "https://osusadispatch.yuanshen.com";
+
+        public string AS_Ping_Addr = "oss-ap-northeast-1.aliyuncs.com";
+        public string NA_Ping_Addr = "oss-us-east-1.aliyuncs.com";
+        public string EU_Ping_Addr = "oss-eu-central-1.aliyuncs.com";
+        public string TW_Ping_Addr = "oss-ap-northeast-1.aliyuncs.com";
+
+        public bool AS_Status = false;
+        public bool TW_Status = false;
+        public bool EU_Status = false ;
+        public bool NA_Status = false;
+
+        public long AS_Ping = -1;
+        public long TW_Ping = -1;
+        public long EU_Ping = -1;
+        public long NA_Ping = -1;
     }
 }

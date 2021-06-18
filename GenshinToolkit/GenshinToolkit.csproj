@@ -203,6 +203,9 @@
     </ApplicationDefinition>
     <Compile Include="Tools.cs" />
     <Compile Include="VersionInfoJSON.cs" />
+    <Compile Include="FileCheck.xaml.cs">
+      <DependentUpon>FileCheck.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -215,6 +218,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="FileCheck.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
