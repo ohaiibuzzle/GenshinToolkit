@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="Buzzle's Genshin Toolkit" Height="480" Width="800" ResizeMode="CanMinimize">
+        Title="Buzzle's Genshin Toolkit" Height="480" Width="800" ResizeMode="CanMinimize"
+        Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="417" VerticalAlignment="Top" Width="792" Margin="0,34,0,0" Grid.RowSpan="2">
+        <TabControl x:Name="MainUiTabs" HorizontalAlignment="Left" Height="417" VerticalAlignment="Top" Width="792" Margin="0,34,0,0" Grid.RowSpan="2">
             <TabItem Header="Download">
                 <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Bottom">
                     <Grid.ColumnDefinitions>
@@ -69,15 +70,15 @@
                     <CheckBox x:Name="closeAppChk" Content="Close this app" HorizontalAlignment="Left" Margin="267,146,0,0" VerticalAlignment="Top" Width="250"/>
                     <CheckBox x:Name="play_borderless_chk" Content="Open in a borderless window" HorizontalAlignment="Left" Margin="267,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.133"/>
                     <CheckBox x:Name="play_custom_res_chk" Content="Custom Resolution" HorizontalAlignment="Left" Margin="267,166,0,0" VerticalAlignment="Top" Checked="play_custom_res_chk_Checked" Unchecked="play_custom_res_chk_Unchecked"/>
-                    <Grid x:Name="play_custom_res_grid" Margin="267,190,269,177" IsEnabled="False" Visibility="Hidden" >
+                    <Grid x:Name="play_custom_res_grid" Margin="267,190,269,177" IsEnabled="False" Visibility="Hidden">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="13*"/>
                             <ColumnDefinition Width="13*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="play_w_textbox" HorizontalAlignment="Left" Height="23" Margin="64,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="51"/>
+                        <TextBox x:Name="play_w_textbox" HorizontalAlignment="Left" Height="23" Margin="64,0,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="51" PreviewTextInput="custom_res_textbox_PreviewTextInput"/>
                         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Width:" VerticalAlignment="Top" RenderTransformOrigin="0.224,-0.062" Height="23" Width="59" FontSize="14"/>
                         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,1,0,0" TextWrapping="Wrap" Text="Height:" VerticalAlignment="Top" Height="22" Width="61" Grid.Column="1" FontSize="14"/>
-                        <TextBox x:Name="play_h_textbox" HorizontalAlignment="Left" Height="23" Margin="76,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="49" Grid.Column="1"/>
+                        <TextBox x:Name="play_h_textbox" HorizontalAlignment="Left" Height="23" Margin="76,0,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="49" Grid.Column="1" PreviewTextInput="custom_res_textbox_PreviewTextInput"/>
                     </Grid>
                     <CheckBox x:Name="play_as_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="168,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
                     <CheckBox x:Name="play_eu_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="328,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
@@ -98,6 +99,8 @@
                     <Button x:Name="misc_msvc_install" Content="Reinstall MSVC Runtime" HorizontalAlignment="Left" Margin="267,156,0,0" VerticalAlignment="Top" Width="270" Click="misc_msvc_install_Click"/>
                     <Button x:Name="misc_reinstall_DirectX" Content="Reinstall DirectX Runtime" HorizontalAlignment="Left" Margin="267,181,0,0" VerticalAlignment="Top" Width="270" Click="misc_reinstall_DirectX_Click"/>
                     <Button x:Name="misc_checkGameFileHashes" Content="Check game files hashes" HorizontalAlignment="Left" Margin="267,206,0,0" VerticalAlignment="Top" Width="270" Click="misc_checkGameFileHashes_Click"/>
+                    <Button x:Name="misc_update_info_uri" Content="Change update info URI" HorizontalAlignment="Left" Margin="267,231,0,0" VerticalAlignment="Top" Width="270" Click="misc_update_info_uri_Click"/>
+                    <Button x:Name="misc_self_destruct_btn" Content="Nuke this app's settings" HorizontalAlignment="Left" Height="20" Margin="267,256,0,0" VerticalAlignment="Top" Width="270" Click="misc_self_destruct_btn_Click"/>
 
                 </Grid>
             </TabItem>

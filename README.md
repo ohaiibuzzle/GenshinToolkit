@@ -5,7 +5,7 @@ Imagine getting **SO BORED** that you reimplemented the whole Genshin Launcher i
 Comes with:
 - Problematic code to hopefully fix your problems
 - 7z and aria2
-- Does not even remember your settings!
+- ~~Does not even remember your settings!~~ It now does.
 
 Anyway, prebuilt in [Releases](https://github.com/ohaiibuzzle/GSToolkit/releases)
 

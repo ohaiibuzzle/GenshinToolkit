@@ -201,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Settings.cs" />
+    <Compile Include="SimpleTextInput.xaml.cs">
+      <DependentUpon>SimpleTextInput.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Tools.cs" />
     <Compile Include="VersionInfoJSON.cs" />
     <Compile Include="FileCheck.xaml.cs">
@@ -219,6 +223,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="FileCheck.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SimpleTextInput.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

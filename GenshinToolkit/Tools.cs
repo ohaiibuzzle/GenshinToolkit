@@ -77,7 +77,7 @@ namespace GenshinToolkit
             }
         }
 
-        static public bool? check_download_Aria()
+        static public bool? CheckDownloadAria2()
         {
             if (!File.Exists("aria2c.exe"))
             {
@@ -244,13 +244,13 @@ namespace GenshinToolkit
             return Path.GetFileName(new Uri(url).AbsolutePath);
         }
 
-        public static bool getVersionInfoGH()
+        public static bool GetVersionInfo()
         {
             try
             {
                 using (var client = new WebClient())
                 {
-                    client.DownloadFile("https://raw.githubusercontent.com/ohaiibuzzle/GSToolkit/senpai/static/versioninfo.json", "versioninfo.json");
+                    client.DownloadFile(Properties.Settings.Default.UpdateInfoURI, "versioninfo.json");
                     return true;
                 }
             }
@@ -260,6 +260,21 @@ namespace GenshinToolkit
             }
         }
 
+        public static bool GetVersionInfo(string uri)
+        {
+            try
+            {
+                using (var client = new WebClient())
+                {
+                    client.DownloadFile(uri, "versioninfo.json");
+                    return true;
+                }
+            }
+            catch (WebException)
+            {
+                return false;
+            }
+        }
 
         public static Servers serverInfo()
         {

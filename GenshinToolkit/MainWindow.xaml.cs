@@ -1,10 +1,12 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -23,14 +25,16 @@ namespace GenshinToolkit
         {
             InitializeComponent();
 
-            if (Tools.getVersionInfoGH() != true)
+            if (Tools.GetVersionInfo() != true)
             {
                 MessageBox.Show("Cannot check for version updates... :(", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Windows.Forms.Application.Exit();
             }
-            init_comboboxes();
+
+            RestoreSettings();
+            InitComboboxes();
             BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += update_server_status;
+            worker.DoWork += UpdateServerStatus;
             worker.RunWorkerAsync();
         }
 
@@ -42,6 +46,7 @@ namespace GenshinToolkit
                 if (result == System.Windows.Forms.DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     GameDirBox.Text = fbd.SelectedPath;
+                    Properties.Settings.Default.GamePath = fbd.SelectedPath;
                 }
 
                 ObservableCollection<string> versions = new ObservableCollection<string>();
@@ -81,7 +86,7 @@ namespace GenshinToolkit
 
                         if (play_borderless_chk.IsChecked == true)
                         {
-                            launchArgs.Append("-popupwindow -screen-fullscreen 0");
+                            launchArgs.Append("-popupwindow -screen-fullscreen 0 ");
                         }
 
                         if (graphicsConfigChk.IsChecked == true)
@@ -112,14 +117,14 @@ namespace GenshinToolkit
         {
             play_custom_res_grid.Visibility = Visibility.Visible;
             play_custom_res_grid.IsEnabled = true;
-            play_w_textbox.Text = SystemParameters.PrimaryScreenWidth.ToString();
-            play_h_textbox.Text = SystemParameters.PrimaryScreenHeight.ToString();
+            Properties.Settings.Default.CustomResEnabled = true;
         }
 
         private void play_custom_res_chk_Unchecked(object sender, RoutedEventArgs e)
         {
             play_custom_res_grid.Visibility = Visibility.Hidden;
             play_custom_res_grid.IsEnabled = false;
+            Properties.Settings.Default.CustomResEnabled = false;
         }
 
         private void Download_btn_click(object sender, RoutedEventArgs e)
@@ -127,13 +132,13 @@ namespace GenshinToolkit
 
             BackgroundWorker worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
-            worker.DoWork += do_download;
+            worker.DoWork += DoDownload;
             worker.ProgressChanged += update_dl_statusbar;
 
             worker.RunWorkerAsync();
         }
 
-        private void do_download(object sender, DoWorkEventArgs e)
+        private void DoDownload(object sender, DoWorkEventArgs e)
         {
             var downloadInfo = this.Dispatcher.Invoke(() =>
             {
@@ -149,7 +154,7 @@ namespace GenshinToolkit
                 Download_ProgLabel.Content = "Downloading support tools";
             });
 
-            if (Tools.check_download_Aria()!=true || Tools.check_download_7z() != true)
+            if (Tools.CheckDownloadAria2()!=true || Tools.check_download_7z() != true)
             {
                 MessageBox.Show("Cannot get support tools :(", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
@@ -167,7 +172,7 @@ namespace GenshinToolkit
             {
                 Download_ProgLabel.Content = "Downloading Base Game...";
             });
-            var ret = startAria2download(path, downloadInfo.base_game_download_md5, downloadInfo.base_game_download);
+            var ret = StartAria2Download(path, downloadInfo.base_game_download_md5, downloadInfo.base_game_download);
 
             if (ret == 0 && this.Dispatcher.Invoke(() =>
             {
@@ -189,7 +194,7 @@ namespace GenshinToolkit
                     Download_ProgLabel.Content = "Downloading English Voice Pack";
 
                 });
-                ret = startAria2download(path, downloadInfo.en_vo_pack_md5, downloadInfo.en_vo_pack);
+                ret = StartAria2Download(path, downloadInfo.en_vo_pack_md5, downloadInfo.en_vo_pack);
 
                 if (ret == 0 && this.Dispatcher.Invoke(() =>
                 {
@@ -211,7 +216,7 @@ namespace GenshinToolkit
                     Download_ProgLabel.Content = "Downloading Japanese Voice Pack";
 
                 });
-                ret = startAria2download(path, downloadInfo.jp_vo_pack_md5, downloadInfo.jp_vo_pack);
+                ret = StartAria2Download(path, downloadInfo.jp_vo_pack_md5, downloadInfo.jp_vo_pack);
 
                 if (ret == 0 && this.Dispatcher.Invoke(() =>
                 {
@@ -233,7 +238,7 @@ namespace GenshinToolkit
                     Download_ProgLabel.Content = "Downloading Chinese Voice Pack";
 
                 });
-                ret = startAria2download(path, downloadInfo.cn_vo_pack_md5, downloadInfo.cn_vo_pack);
+                ret = StartAria2Download(path, downloadInfo.cn_vo_pack_md5, downloadInfo.cn_vo_pack);
 
                 if (ret == 0 && this.Dispatcher.Invoke(() =>
                 {
@@ -255,7 +260,7 @@ namespace GenshinToolkit
                     Download_ProgLabel.Content = "Downloading Korean Voice Pack";
 
                 });
-                ret = startAria2download(path, downloadInfo.ko_vo_pack_md5, downloadInfo.ko_vo_pack);
+                ret = StartAria2Download(path, downloadInfo.ko_vo_pack_md5, downloadInfo.ko_vo_pack);
 
                 if (ret == 0 && this.Dispatcher.Invoke(() =>
                 {
@@ -287,14 +292,14 @@ namespace GenshinToolkit
             Download_progbar.SetPercent(e.ProgressPercentage);
         }
 
-        private int startAria2download(string path, string md5, string link)
+        private int StartAria2Download(string path, string md5, string link)
         {
             var aria2args = "-x16 -j16 -s16 -k 1M -d " + path + " -Vtrue --checksum=md5=" + md5 + " " + link;
             var process = Process.Start("aria2c.exe", aria2args);
             process.WaitForExit();
             return process.ExitCode;
         }
-        private int startAria2download(string md5, string link)
+        private int StartAria2Download(string md5, string link)
         {
             var aria2args = "-x16 -j16 -s16 -k 1M" + " -Vtrue --checksum=md5=" + md5 + " " + link;
             var process = Process.Start("aria2c.exe", aria2args);
@@ -313,7 +318,7 @@ namespace GenshinToolkit
         }
 
 
-        private void init_comboboxes()
+        private void InitComboboxes()
         {
             ObservableCollection<string> current_version = new ObservableCollection<string>();
             current_version.Add("None");
@@ -423,28 +428,28 @@ namespace GenshinToolkit
 
         private void misc_msvc_install_Click(object sender, RoutedEventArgs e)
         {
-            if (Tools.check_download_Aria() != true)
+            if (Tools.CheckDownloadAria2() != true)
             {
                 MessageBox.Show("Cannot get support tools :(", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else
             {
-                startAria2download("FB1CB75F59D98B5D1E1E31476CBE6F61", "https://aka.ms/vs/16/release/vc_redist.x64.exe");
+                StartAria2Download("FB1CB75F59D98B5D1E1E31476CBE6F61", "https://aka.ms/vs/16/release/vc_redist.x64.exe");
                 Process.Start("vc_redist.x64.exe");
             }
         }
 
         private void misc_reinstall_DirectX_Click(object sender, RoutedEventArgs e)
         {
-            if (Tools.check_download_Aria() != true || Tools.check_download_7z() != true)
+            if (Tools.CheckDownloadAria2() != true || Tools.check_download_7z() != true)
             {
                 MessageBox.Show("Cannot get support tools :(", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             else
             {
-                startAria2download("CA2AC3835D7D7DA6CB8624FEFB177083", "https://autopatchhk.yuanshen.com/client_app/plugins/DXSETUP.zip");
+                StartAria2Download("CA2AC3835D7D7DA6CB8624FEFB177083", "https://autopatchhk.yuanshen.com/client_app/plugins/DXSETUP.zip");
                 Process.Start("7za.exe", "x DXSETUP.zip").WaitForExit();
                 Process.Start("DXSETUP\\DXSETUP.exe");
             }
@@ -456,15 +461,46 @@ namespace GenshinToolkit
             fc.Show();
         }
 
+        private void misc_update_info_uri_Click(object sender, RoutedEventArgs e)
+        {
+            var changeUriDialog = new SimpleTextInput(Properties.Settings.Default.UpdateInfoURI);
+            changeUriDialog.ShowDialog();
+
+            if (!Tools.GetVersionInfo(changeUriDialog.value))
+            {
+                MessageBox.Show("Cannot fetch update data from URL provided", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Tools.GetVersionInfo();
+                return;
+            }
+            try
+            {
+                Tools.DeserializeVersionInfoJSON("versioninfo.json");
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Cannot parse update data from URL provided", "Parsing Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            Properties.Settings.Default.UpdateInfoURI = changeUriDialog.value;
+            Console.WriteLine(changeUriDialog.value);
+        }
+
+        private void misc_self_destruct_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.Reset();
+            Properties.Settings.Default.Save();
+            RestoreSettings();
+        }
+
         private void play_refreshStatus_btn_Click(object sender, RoutedEventArgs e)
         {
             BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += update_server_status;
+            worker.DoWork += UpdateServerStatus;
 
             worker.RunWorkerAsync();
         }
 
-        private void update_server_status(object sender, DoWorkEventArgs e)
+        private void UpdateServerStatus(object sender, DoWorkEventArgs e)
         {
             var status = Tools.serverInfo();
             this.Dispatcher.Invoke(() =>
@@ -482,6 +518,51 @@ namespace GenshinToolkit
                 play_tw_status_chk.Content = status.TW_Ping + " ms";
 
             });
+        }
+
+        private void Window_Closing(object sender, CancelEventArgs e)
+        {
+            Properties.Settings.Default.CustomResW = play_w_textbox.Text;
+            Properties.Settings.Default.CustomResH = play_h_textbox.Text;
+            Properties.Settings.Default.BorderlessEnabled = (bool)play_borderless_chk.IsChecked;
+            Properties.Settings.Default.SelfDestruct = (bool)closeAppChk.IsChecked;
+            Properties.Settings.Default.OpenUnityConfig = (bool)graphicsConfigChk.IsChecked;
+            Properties.Settings.Default.ActiveTab = MainUiTabs.SelectedIndex;
+            Properties.Settings.Default.Save();
+        }
+
+        private void RestoreSettings()
+        {
+            GameDirBox.Text = Properties.Settings.Default.GamePath;
+
+            if (Properties.Settings.Default.CustomResH == "0" && Properties.Settings.Default.CustomResW == "0")
+            {
+                play_w_textbox.Text = SystemParameters.PrimaryScreenWidth.ToString();
+                play_h_textbox.Text = SystemParameters.PrimaryScreenHeight.ToString();
+            }
+            else
+            {
+                play_w_textbox.Text = Properties.Settings.Default.CustomResW;
+                play_h_textbox.Text = Properties.Settings.Default.CustomResH;
+            }
+
+            play_custom_res_chk.IsChecked = Properties.Settings.Default.CustomResEnabled;
+            play_borderless_chk.IsChecked = Properties.Settings.Default.BorderlessEnabled;
+            closeAppChk.IsChecked = Properties.Settings.Default.SelfDestruct;
+            graphicsConfigChk.IsChecked = Properties.Settings.Default.OpenUnityConfig;
+
+            MainUiTabs.SelectedIndex = Properties.Settings.Default.ActiveTab;
+        }
+
+        private void custom_res_textbox_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        {
+            e.Handled = !NumberFilter(e.Text);
+        }
+
+        private static readonly Regex numbersOnly = new Regex("[^0-9.-]+");
+        private static bool NumberFilter(string text)
+        {
+            return !numbersOnly.IsMatch(text);
         }
 
     }
