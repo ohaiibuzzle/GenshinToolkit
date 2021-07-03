@@ -20,10 +20,10 @@ namespace GenshinToolkit
     public partial class SimpleTextInput : Window
     {
         public string value;
-        public SimpleTextInput(string InititialValue)
+        public SimpleTextInput(string windowTitle, string InititialValue)
         {
             InitializeComponent();
-
+            this.Title = windowTitle;
             textBox.Text = InititialValue;
             value = InititialValue;
         }

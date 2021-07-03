@@ -463,7 +463,7 @@ namespace GenshinToolkit
 
         private void misc_update_info_uri_Click(object sender, RoutedEventArgs e)
         {
-            var changeUriDialog = new SimpleTextInput(Properties.Settings.Default.UpdateInfoURI);
+            var changeUriDialog = new SimpleTextInput("Change Update URI", Properties.Settings.Default.UpdateInfoURI);
             changeUriDialog.ShowDialog();
 
             if (!Tools.GetVersionInfo(changeUriDialog.value))
