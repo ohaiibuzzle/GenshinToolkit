@@ -131,5 +131,17 @@ namespace GenshinToolkit.Properties {
                 this["UpdateInfoURI"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool FullscreenEnabled {
+            get {
+                return ((bool)(this["FullscreenEnabled"]));
+            }
+            set {
+                this["FullscreenEnabled"] = value;
+            }
+        }
     }
 }

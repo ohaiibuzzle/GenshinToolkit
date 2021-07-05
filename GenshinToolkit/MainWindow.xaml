@@ -68,7 +68,7 @@
                     <Button x:Name="LaunchBtn" Content="Launch!" HorizontalAlignment="Left" Height="60" Margin="267,223,0,0" VerticalAlignment="Top" Width="250" Click="LaunchBtn_Click" RenderTransformOrigin="0.5,0.5"/>
                     <CheckBox x:Name="graphicsConfigChk" Content="Open Graphics Configuration" HorizontalAlignment="Left" Margin="267,126,0,0" VerticalAlignment="Top" Width="250"/>
                     <CheckBox x:Name="closeAppChk" Content="Close this app" HorizontalAlignment="Left" Margin="267,146,0,0" VerticalAlignment="Top" Width="250"/>
-                    <CheckBox x:Name="play_borderless_chk" Content="Open in a borderless window" HorizontalAlignment="Left" Margin="267,106,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.133"/>
+                    <CheckBox x:Name="play_borderless_chk" Content="Open in a borderless window" HorizontalAlignment="Left" Margin="267,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.133"/>
                     <CheckBox x:Name="play_custom_res_chk" Content="Custom Resolution" HorizontalAlignment="Left" Margin="267,166,0,0" VerticalAlignment="Top" Checked="play_custom_res_chk_Checked" Unchecked="play_custom_res_chk_Unchecked"/>
                     <Grid x:Name="play_custom_res_grid" Margin="267,190,269,177" IsEnabled="False" Visibility="Hidden">
                         <Grid.ColumnDefinitions>
@@ -90,6 +90,7 @@
                     <TextBlock x:Name="play_tw_status_lbl" HorizontalAlignment="Left" Margin="597,348,0,0" TextWrapping="Wrap" Text="SAR:" VerticalAlignment="Top"/>
                     <TextBlock x:Name="statusText" HorizontalAlignment="Left" Margin="17,348,0,0" TextWrapping="Wrap" Text="Server Status:" VerticalAlignment="Top"/>
                     <Button x:Name="play_refreshStatus_btn" Content="🔄" HorizontalAlignment="Left" Margin="742,346,0,0" VerticalAlignment="Top" Click="play_refreshStatus_btn_Click"/>
+                    <CheckBox x:Name="play_fullscreen_chk" Content="Open fullscreen" HorizontalAlignment="Left" Margin="267,106,0,0" VerticalAlignment="Top"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Misc. Tools">

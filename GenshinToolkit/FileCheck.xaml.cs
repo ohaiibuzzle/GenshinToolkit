@@ -60,7 +60,7 @@ namespace GenshinToolkit
             {
                 statusTextBox.AppendText("Everything looks OK!\n");
             }
-            statusTextBox.AppendText("Good: " + goodFiles + ", Bad: " + badFiles.Length + ", Total: " + goodFiles + badFiles.Length);
+            statusTextBox.AppendText("Good: " + goodFiles + ", Bad: " + badFiles.Length + ", Total: " + (goodFiles + badFiles.Length));
         }
 
         private void DoFileCheckup(object sender, DoWorkEventArgs e)

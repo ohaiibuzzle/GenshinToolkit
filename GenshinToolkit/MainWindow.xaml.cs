@@ -86,7 +86,16 @@ namespace GenshinToolkit
 
                         if (play_borderless_chk.IsChecked == true)
                         {
-                            launchArgs.Append("-popupwindow -screen-fullscreen 0 ");
+                            launchArgs.Append("-popupwindow ");
+                        }
+
+                        if (play_fullscreen_chk.IsChecked == true)
+                        {
+                            launchArgs.Append("-screen-fullscreen 1 ");
+                        }
+                        else
+                        {
+                            launchArgs.Append("-screen-fullscreen 0 ");
                         }
 
                         if (graphicsConfigChk.IsChecked == true)
@@ -525,6 +534,7 @@ namespace GenshinToolkit
             Properties.Settings.Default.CustomResW = play_w_textbox.Text;
             Properties.Settings.Default.CustomResH = play_h_textbox.Text;
             Properties.Settings.Default.BorderlessEnabled = (bool)play_borderless_chk.IsChecked;
+            Properties.Settings.Default.FullscreenEnabled = (bool)play_fullscreen_chk.IsChecked;
             Properties.Settings.Default.SelfDestruct = (bool)closeAppChk.IsChecked;
             Properties.Settings.Default.OpenUnityConfig = (bool)graphicsConfigChk.IsChecked;
             Properties.Settings.Default.ActiveTab = MainUiTabs.SelectedIndex;
@@ -548,6 +558,7 @@ namespace GenshinToolkit
 
             play_custom_res_chk.IsChecked = Properties.Settings.Default.CustomResEnabled;
             play_borderless_chk.IsChecked = Properties.Settings.Default.BorderlessEnabled;
+            play_fullscreen_chk.IsChecked = Properties.Settings.Default.FullscreenEnabled;
             closeAppChk.IsChecked = Properties.Settings.Default.SelfDestruct;
             graphicsConfigChk.IsChecked = Properties.Settings.Default.OpenUnityConfig;
 
