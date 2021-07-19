@@ -24,12 +24,14 @@ namespace GenshinToolkit
         public MainWindow()
         {
             InitializeComponent();
-
+            var startupNotif = new MsgBox("Updating version info", "Starting up");
+            startupNotif.Show();
             if (Tools.GetVersionInfo() != true)
             {
                 MessageBox.Show("Cannot check for version updates... :(", "Cannot Connect", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 System.Windows.Forms.Application.Exit();
             }
+            startupNotif.Close();
 
             RestoreSettings();
             InitComboboxes();
@@ -303,6 +305,7 @@ namespace GenshinToolkit
 
         private int StartAria2Download(string path, string md5, string link)
         {
+            path = "\"" + path + "\"";
             var aria2args = "-x16 -j16 -s16 -k 1M -d " + path + " -Vtrue --checksum=md5=" + md5 + " " + link;
             var process = Process.Start("aria2c.exe", aria2args);
             process.WaitForExit();
@@ -322,8 +325,12 @@ namespace GenshinToolkit
 
             ObservableCollection<string> update_version = new ObservableCollection<string>();
             update_version.Add(versionData.data.game.latest.version);
+            if (versionData.data.pre_download_game != null)
+            {
+                update_version.Add(versionData.data.pre_download_game.latest.version);
+            }
             UpdateVersion_box.ItemsSource = update_version;
-            UpdateVersion_box.SelectedItem = UpdateVersion_box.Items[UpdateVersion_box.Items.Count - 1];
+            UpdateVersion_box.SelectedItem = UpdateVersion_box.Items[0];
         }
 
 
@@ -475,6 +482,8 @@ namespace GenshinToolkit
             var changeUriDialog = new SimpleTextInput("Change Update URI", Properties.Settings.Default.UpdateInfoURI);
             changeUriDialog.ShowDialog();
 
+            var UpdateNotif = new MsgBox("Updating version info", "Validating...");
+            UpdateNotif.Show();
             if (!Tools.GetVersionInfo(changeUriDialog.value))
             {
                 MessageBox.Show("Cannot fetch update data from URL provided", "Network Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -490,7 +499,9 @@ namespace GenshinToolkit
                 MessageBox.Show("Cannot parse update data from URL provided", "Parsing Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+            UpdateNotif.Close();
             Properties.Settings.Default.UpdateInfoURI = changeUriDialog.value;
+            InitComboboxes();
             Console.WriteLine(changeUriDialog.value);
         }
 
@@ -576,6 +587,19 @@ namespace GenshinToolkit
             return !numbersOnly.IsMatch(text);
         }
 
+        private void UpdateVersion_box_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            VersionInfoJSON versionData = Tools.DeserializeVersionInfoJSON("versioninfo.json");
+            if (versionData.data.pre_download_game != null) {
+                if (UpdateVersion_box.SelectedItem.ToString() == versionData.data.pre_download_game.latest.version)
+                {
+                    dwl_rewrite_configini.IsChecked = false;
+
+                    return;
+                }
+            }
+            dwl_rewrite_configini.IsChecked = true;
+        }
     }
     public static class ProgressBarExtensions
     {

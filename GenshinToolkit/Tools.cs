@@ -190,6 +190,69 @@ namespace GenshinToolkit
                     isDone = true;
                 }
             }
+            if (upd_ver == versionData.data.pre_download_game?.latest.version)
+            {
+                foreach (var diff in versionData.data.pre_download_game.diffs) {
+                    if (diff.version == curr_ver)
+                    {
+                        this_version.version = diff.version;
+                        this_version.base_game_download = diff.path;
+                        this_version.base_game_download_md5 = diff.md5;
+                        foreach (var pack in diff.voice_packs)
+                        {
+                            switch (pack.language)
+                            {
+                                case "en-us":
+                                    this_version.en_vo_pack = pack.path;
+                                    this_version.en_vo_pack_md5 = pack.md5.ToLowerInvariant();
+                                    break;
+                                case "ja-jp":
+                                    this_version.jp_vo_pack = pack.path;
+                                    this_version.jp_vo_pack_md5 = pack.md5.ToLowerInvariant();
+                                    break;
+                                case "zh-cn":
+                                    this_version.cn_vo_pack = pack.path;
+                                    this_version.cn_vo_pack_md5 = pack.md5.ToLowerInvariant();
+                                    break;
+                                case "ko-kr":
+                                    this_version.ko_vo_pack = pack.path;
+                                    this_version.ko_vo_pack_md5 = pack.md5.ToLowerInvariant();
+                                    break;
+                            }
+                        }
+                        isDone = true;
+                    }
+                }
+                if (!isDone)
+                {
+                    this_version.version = versionData.data.pre_download_game.latest.version;
+                    this_version.base_game_download = versionData.data.pre_download_game.latest.path;
+                    this_version.base_game_download_md5 = versionData.data.pre_download_game.latest.md5;
+                    foreach (var pack in versionData.data.pre_download_game.latest.voice_packs)
+                    {
+                        switch (pack.language)
+                        {
+                            case "en-us":
+                                this_version.en_vo_pack = pack.path;
+                                this_version.en_vo_pack_md5 = pack.md5;
+                                break;
+                            case "ja-jp":
+                                this_version.jp_vo_pack = pack.path;
+                                this_version.jp_vo_pack_md5 = pack.md5;
+                                break;
+                            case "zh-cn":
+                                this_version.cn_vo_pack = pack.path;
+                                this_version.cn_vo_pack_md5 = pack.md5;
+                                break;
+                            case "ko-kr":
+                                this_version.ko_vo_pack = pack.path;
+                                this_version.ko_vo_pack_md5 = pack.md5;
+                                break;
+                        }
+                    }
+                    isDone = true;
+                }
+            }
             if (!isDone)
             {
                 {

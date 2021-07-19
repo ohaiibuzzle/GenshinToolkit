@@ -29,7 +29,7 @@
                         </Border>
                         <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="201" Margin="407,10,0,0" VerticalAlignment="Top" Width="350">
                             <Grid>
-                                <ComboBox x:Name="UpdateVersion_box" HorizontalAlignment="Left" Margin="176,10,0,0" VerticalAlignment="Top" Width="162" Height="26"/>
+                                <ComboBox x:Name="UpdateVersion_box" HorizontalAlignment="Left" Margin="176,10,0,0" VerticalAlignment="Top" Width="162" Height="26" SelectionChanged="UpdateVersion_box_SelectionChanged"/>
                                 <Label x:Name="UpdateVersion_lbl" Content="Update to Version:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
                                 <CheckBox x:Name="EnVO_upd" Content="EN" HorizontalAlignment="Left" Margin="18,65,0,0" VerticalAlignment="Top" Width="100"/>
                                 <CheckBox x:Name="CnVO_upd" Content="CN" HorizontalAlignment="Left" Margin="18,85,0,0" VerticalAlignment="Top"/>

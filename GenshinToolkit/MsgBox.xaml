@@ -1,0 +1,14 @@
+﻿<Window x:Name="Notification" x:Class="GenshinToolkit.MsgBox"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GenshinToolkit"
+        mc:Ignorable="d"
+        Title="MsgBox" Height="85
+        " Width="400" ResizeMode="NoResize">
+    <Grid>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="TextBlock" TextAlignment="Center"  VerticalAlignment="Center" Width="374" Height="27"/>
+
+    </Grid>
+</Window>

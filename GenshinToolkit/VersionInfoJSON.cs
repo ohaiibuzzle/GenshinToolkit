@@ -43,6 +43,12 @@ namespace GenshinToolkit {
         public List<Diff> diffs;
     }
 
+    public class PreDownloadGame
+    {
+        public Latest latest { get; set; }
+        public List<Diff> diffs { get; set; }
+    }
+
     public class DeprecatedPackage
     {
         public string name;
@@ -52,6 +58,7 @@ namespace GenshinToolkit {
     public class Data
     {
         public Game game;
+        public PreDownloadGame pre_download_game { get; set; }
         public List<DeprecatedPackage> deprecated_packages;
     }
 
