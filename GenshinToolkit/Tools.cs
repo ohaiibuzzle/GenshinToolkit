@@ -160,7 +160,7 @@ namespace GenshinToolkit
             bool isDone = false;
             foreach (var diff in versionData.data.game.diffs)
             {
-                if (diff.version == curr_ver)
+                if (diff.version == curr_ver && upd_ver == versionData.data.game.latest.version)
                 {
                     this_version.version = diff.version;
                     this_version.base_game_download = diff.path;
