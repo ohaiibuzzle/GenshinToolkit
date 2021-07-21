@@ -25,8 +25,11 @@ jobs:
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
       
-      - name: Restore Packages and Build with MSBuild
-        run: msbuild -p:RestorePackagesConfig=true -t:restore;build -p:outputpath=output -p:Configuration=Release
+      - name: Restore Packages with MSBuild
+        run: msbuild -p:RestorePackagesConfig=true -t:restore
+        
+      - name: Build with MSBuild
+        run: msbuild -p:RestorePackagesConfig=true -t:build -p:outputpath=output -p:Configuration=Release
         
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.4
