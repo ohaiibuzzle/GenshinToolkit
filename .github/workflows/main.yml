@@ -23,7 +23,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Setup MSBuild.exe
-        uses: microsoft/setup-msbuild@v1.0.0
+        uses: microsoft/setup-msbuild@v1.0.2
       
       - name: Restore Packages and Build with MSBuild
         run: msbuild -p:RestorePackagesConfig=true -t:restore;build -p:outputpath=output -p:Configuration=Release
