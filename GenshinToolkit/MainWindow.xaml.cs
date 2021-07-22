@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -35,6 +36,7 @@ namespace GenshinToolkit
 
             RestoreSettings();
             InitComboboxes();
+            BuildString.Text = Assembly.GetExecutingAssembly().GetName().Name + " v. " +  Assembly.GetExecutingAssembly().GetName().Version.ToString();
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += UpdateServerStatus;
             worker.RunWorkerAsync();
@@ -599,6 +601,11 @@ namespace GenshinToolkit
                 }
             }
             dwl_rewrite_configini.IsChecked = true;
+        }
+
+        private void BuildString_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Process.Start("https://github.com/ohaiibuzzle/GenshinToolkit/");
         }
     }
     public static class ProgressBarExtensions

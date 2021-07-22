@@ -102,6 +102,7 @@
                     <Button x:Name="misc_checkGameFileHashes" Content="Check game files hashes" HorizontalAlignment="Left" Margin="267,206,0,0" VerticalAlignment="Top" Width="270" Click="misc_checkGameFileHashes_Click"/>
                     <Button x:Name="misc_update_info_uri" Content="Change update info URI" HorizontalAlignment="Left" Margin="267,231,0,0" VerticalAlignment="Top" Width="270" Click="misc_update_info_uri_Click"/>
                     <Button x:Name="misc_self_destruct_btn" Content="Nuke this app's settings" HorizontalAlignment="Left" Height="20" Margin="267,256,0,0" VerticalAlignment="Top" Width="270" Click="misc_self_destruct_btn_Click"/>
+                    <TextBlock x:Name="BuildString" HorizontalAlignment="Right" Margin="0,364,10,10" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" Text="build_string" MouseLeftButtonUp="BuildString_MouseLeftButtonUp"/>
 
                 </Grid>
             </TabItem>
