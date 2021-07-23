@@ -544,6 +544,13 @@ namespace GenshinToolkit
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            var closing_msg = new MsgBox("Saving settings and cleaning up...", "Exiting");
+            closing_msg.Show();
+            if (File.Exists("versioninfo.json"))
+            {
+                File.Delete("versioninfo.json");
+            }
+
             Properties.Settings.Default.CustomResW = play_w_textbox.Text;
             Properties.Settings.Default.CustomResH = play_h_textbox.Text;
             Properties.Settings.Default.BorderlessEnabled = (bool)play_borderless_chk.IsChecked;
@@ -552,6 +559,8 @@ namespace GenshinToolkit
             Properties.Settings.Default.OpenUnityConfig = (bool)graphicsConfigChk.IsChecked;
             Properties.Settings.Default.ActiveTab = MainUiTabs.SelectedIndex;
             Properties.Settings.Default.Save();
+
+            closing_msg.Close();
         }
 
         private void RestoreSettings()
