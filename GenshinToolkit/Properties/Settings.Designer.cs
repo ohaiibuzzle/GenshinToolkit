@@ -167,5 +167,17 @@ namespace GenshinToolkit.Properties {
                 this["hyLabEventID"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool CallUpgrade {
+            get {
+                return ((bool)(this["CallUpgrade"]));
+            }
+            set {
+                this["CallUpgrade"] = value;
+            }
+        }
     }
 }

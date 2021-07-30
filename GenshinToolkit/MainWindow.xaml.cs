@@ -24,8 +24,14 @@ namespace GenshinToolkit
     {
         public MainWindow()
         {
+            if (Properties.Settings.Default.CallUpgrade)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.CallUpgrade = false;
+                Properties.Settings.Default.Save();
+            }
             InitializeComponent();
-            System.Windows.Forms.Application.EnableVisualStyles();
+            Properties.Settings.Default.Reload();
             var startupNotif = new MsgBox("Updating version info", "Starting up");
             startupNotif.Show();
             if (Tools.GetVersionInfo() != true)
