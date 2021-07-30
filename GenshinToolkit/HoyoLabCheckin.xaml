@@ -1,0 +1,22 @@
+﻿<Window x:Class="GenshinToolkit.HoyoLabCheckin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GenshinToolkit"
+        mc:Ignorable="d"
+        Title="HoyoLabCheckin" Height="366.986" Width="464.013">
+    <Grid>
+        <TextBox x:Name="cookies_tb" HorizontalAlignment="Left" Height="143" Margin="10,38,0,0" TextWrapping="Wrap" Text="" 
+                 VerticalAlignment="Top" Width="436" GotFocus="cookies_tb_GotFocus"/>
+        <Label x:Name="cookies_lbl" Content="Your cookies for HoyoLab:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chk_remember_cookies" ToolTip="Remember these information so you don't have to key them in. DO NOT USE ON DEVICES YOU CANNOT TRUST"
+                  Content="Remember these (BE CAREFUL)" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="Ok_btn" Content="OK" HorizontalAlignment="Center" Margin="-100,0,0,10" VerticalAlignment="Bottom" Width="75" Click="Ok_btn_Click"/>
+        <Button x:Name="Cancel_btn" Content="Close" HorizontalAlignment="Center" Margin="0,0,-100,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="-0.498,1.629" Click="Cancel_btn_Click"/>
+        <TextBox x:Name="eventid_tb" HorizontalAlignment="Left" Height="23" Margin="10,207,0,0" TextWrapping="Wrap" Text="e2147483648" VerticalAlignment="Top" Width="436"/>
+        <Label x:Name="eventid_label" Content="Event ID" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="StatusLabel" HorizontalAlignment="Left" Height="31" Margin="140,260,0,0" VerticalAlignment="Top" Width="176" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+    </Grid>
+</Window>

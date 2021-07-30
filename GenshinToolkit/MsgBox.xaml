@@ -5,10 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="MsgBox" Height="85
-        " Width="400" ResizeMode="NoResize">
+        Title="MsgBox" Height="91" Width="400" ResizeMode="NoResize">
     <Grid>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="TextBlock" TextAlignment="Center"  VerticalAlignment="Center" Width="374" Height="27"/>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" Margin="10" TextWrapping="Wrap" Text="TextBlock" TextAlignment="Center"  VerticalAlignment="Center" Width="374" Height="36"/>
 
     </Grid>
 </Window>

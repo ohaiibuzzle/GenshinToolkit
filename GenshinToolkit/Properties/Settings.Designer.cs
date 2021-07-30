@@ -143,5 +143,29 @@ namespace GenshinToolkit.Properties {
                 this["FullscreenEnabled"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mi18nLang=en-us; _MHYUUID=dQw4w9WgXcQ-nev3r-g00na-giv3-y0u-up-...")]
+        public string hyLabCookieString {
+            get {
+                return ((string)(this["hyLabCookieString"]));
+            }
+            set {
+                this["hyLabCookieString"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("e202102251931481")]
+        public string hyLabEventID {
+            get {
+                return ((string)(this["hyLabEventID"]));
+            }
+            set {
+                this["hyLabEventID"] = value;
+            }
+        }
     }
 }

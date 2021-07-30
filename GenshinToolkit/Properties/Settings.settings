@@ -32,5 +32,11 @@
     <Setting Name="FullscreenEnabled" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="hyLabCookieString" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mi18nLang=en-us; _MHYUUID=dQw4w9WgXcQ-nev3r-g00na-giv3-y0u-up-...</Value>
+    </Setting>
+    <Setting Name="hyLabEventID" Type="System.String" Scope="User">
+      <Value Profile="(Default)">e202102251931481</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

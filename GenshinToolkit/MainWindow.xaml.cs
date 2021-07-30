@@ -25,6 +25,7 @@ namespace GenshinToolkit
         public MainWindow()
         {
             InitializeComponent();
+            System.Windows.Forms.Application.EnableVisualStyles();
             var startupNotif = new MsgBox("Updating version info", "Starting up");
             startupNotif.Show();
             if (Tools.GetVersionInfo() != true)
@@ -292,6 +293,30 @@ namespace GenshinToolkit
                 Tools.WriteConfigIni(downloadInfo.version, path + "/config.ini");
             }
 
+            if (this.Dispatcher.Invoke(() => {
+                return Dwl_cleanup.IsChecked;
+            }) == true)
+            {
+                var depr_list = Tools.getDeprecatedList();
+
+                string[] files = this.Dispatcher.Invoke(() =>
+                {
+                    return Directory.GetFiles(GameDirBox.Text);
+                });
+
+                foreach (var file in files)
+                {
+
+                    if (depr_list.Contains(Path.GetFileName(file)))
+                    {
+                        Console.WriteLine("Found File: " + file);
+                        File.Delete(file);
+                        ;
+                    }
+                }
+
+            }
+
             this.Dispatcher.Invoke(() =>
             {
                 Download_progbar.SetPercent(100);
@@ -413,13 +438,35 @@ namespace GenshinToolkit
                 {
                     var localAppData_mhy = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "miHoYo");
                     Console.WriteLine(localAppData_mhy);
-                    Directory.Delete(localAppData_mhy, true);
+                    try
+                    {
+                        Directory.Delete(localAppData_mhy, true);
+                    } catch (DirectoryNotFoundException)
+                    {
+                        ;
+                    }
 
                     string localLowAppData_mhy = @"%UserProfile%\AppData\LocalLow\miHoYo";
                     localLowAppData_mhy = Environment.ExpandEnvironmentVariables(localLowAppData_mhy);
                     Console.WriteLine(localLowAppData_mhy);
-                    Directory.Delete(localLowAppData_mhy, true);
+                    try
+                    {
+                        Directory.Delete(localLowAppData_mhy, true);
+                    }
+                    catch (DirectoryNotFoundException)
+                    {
+                        ;
+                    }
 
+                    var webCaches_path = Path.Combine(GameDirBox.Text, "GenshinImpact_Data\\webCaches");
+                    Console.WriteLine(webCaches_path);
+                    try
+                    {
+                        Directory.Delete(webCaches_path, true);
+                    } catch (DirectoryNotFoundException)
+                    {
+                        ;
+                    }
                 }
 
                 if (fix_rewrite_config_chk.IsChecked == true)
@@ -529,16 +576,19 @@ namespace GenshinToolkit
             {
                 play_as_status_chk.IsChecked = status.AS_Status;
                 play_as_status_chk.Content = status.AS_Ping + " ms";
+                play_as_status_chk.ToolTip = "This server is up and can be played on";
 
                 play_eu_status_chk.IsChecked = status.EU_Status;
                 play_eu_status_chk.Content = status.EU_Ping + " ms";
+                play_eu_status_chk.ToolTip = "This server is up and can be played on";
 
                 play_na_status_chk.IsChecked = status.NA_Status;
                 play_na_status_chk.Content = status.NA_Ping + " ms";
+                play_na_status_chk.ToolTip = "This server is up and can be played on";
 
                 play_tw_status_chk.IsChecked = status.TW_Status;
                 play_tw_status_chk.Content = status.TW_Ping + " ms";
-
+                play_tw_status_chk.ToolTip = "This server is up and can be played on";
             });
         }
 
@@ -615,6 +665,12 @@ namespace GenshinToolkit
         private void BuildString_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Process.Start("https://github.com/ohaiibuzzle/GenshinToolkit/");
+        }
+
+        private void misc_hoyolab_checkin_Click(object sender, RoutedEventArgs e)
+        {
+            var checkin_window = new HoyoLabCheckin();
+            checkin_window.Show();
         }
     }
     public static class ProgressBarExtensions
