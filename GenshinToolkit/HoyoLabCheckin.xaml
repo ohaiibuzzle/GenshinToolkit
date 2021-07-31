@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="HoyoLab Check-in" Height="441.993" Width="464.013">
+        Title="HoyoLab Check-in" Height="440" Width="464" ResizeMode="NoResize">
     <Grid>
         <TextBox x:Name="cookies_tb" ToolTip="Your cookie to HoyoLab. Get this from your browser's developer panel" 
                  HorizontalAlignment="Left" Height="143" Margin="10,38,0,0" TextWrapping="Wrap" Text="" 
@@ -18,7 +18,7 @@
         <TextBox x:Name="eventid_tb" ToolTip="An EventID, you can typically get this from the URL"
                  HorizontalAlignment="Left" Height="23" Margin="10,207,0,0" TextWrapping="Wrap" Text="e2147483648" VerticalAlignment="Top" Width="436"/>
         <Label x:Name="eventid_label" Content="Event ID" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="StatusLabel" HorizontalAlignment="Left" Height="31" Margin="140,345,0,0" VerticalAlignment="Top" Width="176" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label x:Name="StatusLabel" HorizontalAlignment="Left" Height="31" Margin="139.506,345.033,0,0" VerticalAlignment="Top" Width="176" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content=""/>
         <CheckBox x:Name="auto_checkin" ToolTip="Automatically performs the checkin when you start Toolkit."
                   Content="Attempt check-in on Toolkit startup" IsEnabled="False" HorizontalAlignment="Left" Margin="225,295,0,0" VerticalAlignment="Top"/>
         <Label x:Name="UserAgent_label" Content="UserAgent:" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top"/>
