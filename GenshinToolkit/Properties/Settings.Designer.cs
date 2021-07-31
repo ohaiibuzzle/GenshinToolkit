@@ -179,5 +179,40 @@ namespace GenshinToolkit.Properties {
                 this["CallUpgrade"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool CheckInOnStartup {
+            get {
+                return ((bool)(this["CheckInOnStartup"]));
+            }
+            set {
+                this["CheckInOnStartup"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.DateTime Today {
+            get {
+                return ((global::System.DateTime)(this["Today"]));
+            }
+            set {
+                this["Today"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Something/SomeVersion")]
+        public string hyLabUserAgent {
+            get {
+                return ((string)(this["hyLabUserAgent"]));
+            }
+            set {
+                this["hyLabUserAgent"] = value;
+            }
+        }
     }
 }

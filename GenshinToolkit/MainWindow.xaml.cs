@@ -46,6 +46,10 @@ namespace GenshinToolkit
             BuildString.Text = Assembly.GetExecutingAssembly().GetName().Name + " v. " +  Assembly.GetExecutingAssembly().GetName().Version.ToString();
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += UpdateServerStatus;
+            if (Properties.Settings.Default.CheckInOnStartup == true)
+            {
+                worker.DoWork += HoyoLabCheckin.AutoCheckin;
+            }
             worker.RunWorkerAsync();
         }
 

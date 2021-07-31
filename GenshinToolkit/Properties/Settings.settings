@@ -41,5 +41,14 @@
     <Setting Name="CallUpgrade" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="CheckInOnStartup" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="Today" Type="System.DateTime" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="hyLabUserAgent" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Something/SomeVersion</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
