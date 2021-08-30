@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Microsoft.Toolkit.Uwp.Notifications;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
 using System.Collections.ObjectModel;
@@ -44,6 +45,8 @@ namespace GenshinToolkit
             RestoreSettings();
             InitComboboxes();
             BuildString.Text = Assembly.GetExecutingAssembly().GetName().Name + " v. " +  Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+            ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
             BackgroundWorker worker = new BackgroundWorker();
             worker.DoWork += UpdateServerStatus;
             if (Properties.Settings.Default.CheckInOnStartup == true)
@@ -398,6 +401,14 @@ namespace GenshinToolkit
             }
             fixVersion_cb.ItemsSource = fix_vers;
             fixVersion_cb.SelectedItem = fixVersion_cb.Items[0];
+            if (fixVersion_cb.Items[0].ToString() != CurrentVersion_box.Items[CurrentVersion_box.Items.Count - 1].ToString())
+            {
+                new ToastContentBuilder()
+                    .AddArgument("action", "newUpdate")
+                    .AddText("There is a new patch available!")
+                    .AddText($"Patch {fixVersion_cb.Items[0].ToString()} is now available!")
+                    .Show();
+            }
         }
 
         private void fix_button_Click(object sender, RoutedEventArgs e)
@@ -606,11 +617,14 @@ namespace GenshinToolkit
         {
             var closing_msg = new MsgBox("Saving settings and cleaning up...", "Exiting");
             closing_msg.Show();
+
+            // Clean versioninfo
             if (File.Exists("versioninfo.json"))
             {
                 File.Delete("versioninfo.json");
             }
 
+            // Save settings
             Properties.Settings.Default.CustomResW = play_w_textbox.Text;
             Properties.Settings.Default.CustomResH = play_h_textbox.Text;
             Properties.Settings.Default.BorderlessEnabled = (bool)play_borderless_chk.IsChecked;
@@ -619,6 +633,9 @@ namespace GenshinToolkit
             Properties.Settings.Default.OpenUnityConfig = (bool)graphicsConfigChk.IsChecked;
             Properties.Settings.Default.ActiveTab = MainUiTabs.SelectedIndex;
             Properties.Settings.Default.Save();
+
+            // Uninstall Toast notifs
+            ToastNotificationManagerCompat.Uninstall();
 
             closing_msg.Close();
         }
@@ -682,6 +699,19 @@ namespace GenshinToolkit
             var checkin_window = new HoyoLabCheckin();
             checkin_window.Show();
         }
+
+        private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e)
+        {
+            ToastArguments args = ToastArguments.Parse(e.Argument);
+
+            if (args["action"] == "newUpdate") {
+                this.Dispatcher.Invoke(() =>
+                {
+                    MainUiTabs.SelectedIndex = 0;
+                });
+            }
+        }
+
     }
     public static class ProgressBarExtensions
     {
