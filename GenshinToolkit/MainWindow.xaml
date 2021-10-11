@@ -127,7 +127,6 @@
                     <TextBlock x:Name="BuildString" HorizontalAlignment="Right" Margin="0,364.04,10,10" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" Text="build_string" MouseLeftButtonUp="BuildString_MouseLeftButtonUp"/>
                     <Button x:Name="misc_hoyolab_checkin" Content="HoyoLab Check-in" ToolTip="Checks in on HoyoLab automatically. Use with caution."
                             HorizontalAlignment="Center" Height="20" Margin="258,85,258,285" VerticalAlignment="Center" Width="270" Click="misc_hoyolab_checkin_Click"/>
-
                 </Grid>
             </TabItem>
         </TabControl>
