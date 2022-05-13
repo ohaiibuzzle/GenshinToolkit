@@ -5,134 +5,247 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="Buzzle's Genshin Toolkit" Height="480" Width="800" ResizeMode="CanMinimize"
+        Title="Buzzle's Genshin Toolkit" MinHeight="500" MinWidth="800" Width="800" Height="500"
         Closing="Window_Closing">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="47"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TabControl x:Name="MainUiTabs" HorizontalAlignment="Left" Height="417" VerticalAlignment="Top" Width="792" Margin="0,34,0,0" Grid.RowSpan="2">
+        <Border x:Name="GameDirSelector" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="7*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="GameFolderLabel" Content="Game Folder:" HorizontalAlignment="Left" Grid.Column="0" MinWidth="80" Margin="5,0,5,0"/>
+                <TextBox x:Name="GameDirBox" TextWrapping="Wrap" Text="None" IsEnabled="False" Grid.Column="1" VerticalContentAlignment="Center" Margin="5,0,5,0"/>
+                <Button x:Name="BrowseGameFiles" Content="Browse..." Click="Browsebutton_Click" Grid.Column="2" MinWidth="80" Margin="0,0,5,0"/>
+            </Grid>
+        </Border>
+
+        <TabControl x:Name="MainUiTabs" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
             <TabItem Header="Download">
-                <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Bottom">
+                <Grid Background="#FFE5E5E5" VerticalAlignment="Stretch">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="393"/>
-                        <ColumnDefinition Width="393"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <ProgressBar x:Name="Download_progbar" HorizontalAlignment="Center" Height="25" Margin="48.5,0,48.5,118" VerticalAlignment="Bottom" Width="689" Grid.ColumnSpan="2"/>
-                    <Button x:Name="Download_btn" Content="Do it!" HorizontalAlignment="Center" Height="51" Margin="0,0,0,30" Width="244" Grid.ColumnSpan="2" Click="Download_btn_click" VerticalAlignment="Bottom"/>
-                    <Grid Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="221" Margin="10,10,0,0" VerticalAlignment="Top" Width="766">
-                        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="201" Margin="10,10,0,0" VerticalAlignment="Top" Width="350">
-                            <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="7*" />
+                        <RowDefinition Height="3*" />
+                    </Grid.RowDefinitions>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.Row="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="44*" />
+                                <RowDefinition Height="93*" />
+                                <RowDefinition Height="113*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel VerticalAlignment="Center" Margin="10,0,10,0">
+                                <Label x:Name="CurrentVersion_lbl" Content="Current Version:"/>
                                 <ComboBox x:Name="CurrentVersion_box" ToolTip="Current game version detected by GenshinToolkit. Choose 'None' to download everything from scratch" 
-                                          HorizontalAlignment="Right" Margin="0,10,10,0" VerticalAlignment="Top" Width="174" Height="26" SelectionChanged="CurrentVersion_box_SelectionChanged"/>
-                                <Label x:Name="CurrentVersion_lbl" Content="Current Version:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-                            </Grid>
-                        </Border>
-                        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="201" Margin="407,10,0,0" VerticalAlignment="Top" Width="350">
-                            <Grid>
+                                    SelectionChanged="CurrentVersion_box_SelectionChanged" Margin="100,0,0,0"/>
+                            </DockPanel>
+                        </Grid>
+                    </Border>
+                    <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10,10,10,10" Grid.Column="1" Grid.Row="0">
+                        <Grid VerticalAlignment="Stretch">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="44*" />
+                                <RowDefinition Height="93*" />
+                                <RowDefinition Height="113*" />
+                            </Grid.RowDefinitions>
+                            <DockPanel x:Name="VersionOptions" Grid.Row="0" Margin="10,0,10,0" VerticalAlignment="Center">
+                                <Label x:Name="UpdateVersion_lbl" Content="Update to Version:" />
                                 <ComboBox x:Name="UpdateVersion_box" ToolTip="Choose the version to update to"
-                                          HorizontalAlignment="Right" Margin="-2,10,10,0" VerticalAlignment="Top" Width="162" Height="26" SelectionChanged="UpdateVersion_box_SelectionChanged"/>
-                                <Label x:Name="UpdateVersion_lbl" Content="Update to Version:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+                                    SelectionChanged="UpdateVersion_box_SelectionChanged" Margin="100,0,0,0"/>
+                            </DockPanel>
+                            <Grid x:Name="VOOptions" Grid.Row="1" Margin="10,10,10,10" >
+                                <Grid.Resources>
+                                    <Style TargetType="{x:Type CheckBox}">
+                                        <Setter Property="Margin" Value="5,0,0,0"/>
+                                        <Setter Property="HorizontalAlignment" Value="Left"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                    </Style>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*" />
+                                    <ColumnDefinition Width="1*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                    <RowDefinition Height="1*" />
+                                </Grid.RowDefinitions>
+                                <Label x:Name="VOLabel" Content="Voice-over Packs:" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"/>
                                 <CheckBox x:Name="EnVO_upd" ToolTip="Also downloads the English voice pack" 
-                                          Content="EN" HorizontalAlignment="Left" Margin="18,65,0,0" VerticalAlignment="Top" Width="100"/>
+                                    Content="EN" Grid.Row="1" Grid.Column="0"/>
                                 <CheckBox x:Name="CnVO_upd" ToolTip="Also downloads the Chinese voice pack" 
-                                          Content="CN" HorizontalAlignment="Left" Margin="18,85,0,0" VerticalAlignment="Top"/>
+                                    Content="CN" Grid.Row="1" Grid.Column="1"/>
                                 <CheckBox x:Name="JpVO_upd" ToolTip="Also downloads the Japanese voice pack" 
-                                          Content="JP" HorizontalAlignment="Left" Margin="176,65,0,0" VerticalAlignment="Top"/>
+                                    Content="JP" Grid.Row="2" Grid.Column="0"/>
                                 <CheckBox x:Name="KorVo_upd" ToolTip="Also downloads the Korean voice pack" 
-                                          Content="KO" HorizontalAlignment="Left" Margin="176,85,0,0" VerticalAlignment="Top"/>
-                                <Label x:Name="label2" Content="Voice-over Packs" HorizontalAlignment="Left" Margin="10,34,0,0" VerticalAlignment="Top"/>
-                                <CheckBox x:Name="dwl_rewrite_configini" ToolTip="(Recommended for fresh downloads and updates) Update config.ini so GenshinToolkit and the official launcher can detect the game version correctly"
-                                          Content="Rewrite config.ini" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" IsChecked="True"/>
-                                <CheckBox x:Name="Dwl_cleanup" ToolTip="Automatically clears out older update archives"
-                                          Content="Delete old updates (not recommended, let launcher do it)" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" Width="328"/>
-                                <CheckBox x:Name="Dwl_Autoextract_chk" Content="Extract automatically (not recommended, let launcher do it)" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top" Width="338"/>
+                                    Content="KO" Grid.Row="2" Grid.Column="1"/>
                             </Grid>
-                        </Border>
-                    </Grid>
-                    <Label x:Name="Download_ProgLabel" Content="Waiting..." HorizontalAlignment="Center" Margin="0,0,0,88" HorizontalContentAlignment="Center" Width="689" Grid.ColumnSpan="2" Height="30" VerticalAlignment="Bottom"/>
+                            <StackPanel x:Name="DownloadOptions" Grid.Row="2" Margin="10,0,10,0">
+                                <StackPanel.Resources>
+                                    <Style TargetType="{x:Type CheckBox}">
+                                        <Setter Property="Margin" Value="0,5,0,0"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                <CheckBox x:Name="dwl_rewrite_configini" ToolTip="(Recommended for fresh downloads and updates) Update config.ini so GenshinToolkit and the official launcher can detect the game version correctly"
+                                    Content="Rewrite config.ini" IsChecked="True"/>
+                                <CheckBox x:Name="Dwl_cleanup" ToolTip="Automatically clears out older update archives"
+                                    Content="Delete old updates (not recommended, let launcher do it)"/>
+                                <CheckBox x:Name="Dwl_Autoextract_chk" Content="Extract automatically (not recommended, let launcher do it)"/>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <StackPanel x:Name="ProgressStack" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="0,0,0,10" Orientation="Vertical" Grid.Row="1" VerticalAlignment="Center">
+                        <ProgressBar x:Name="Download_progbar" MinHeight="25" MinWidth="689"/>
+                        <Label x:Name="Download_ProgLabel" Content="Waiting..." HorizontalContentAlignment="Center"/>
+                        <Button x:Name="Download_btn" Content="Do it!" MinHeight="50" Width="244" Click="Download_btn_click"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Fix">
-                <Grid Background="#FFE5E5E5" VerticalAlignment="Top" Margin="0,0,0,-1" Height="390">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <CheckBox x:Name="fix_rem_tmp_chk" ToolTip="Remove old and partially downloaded update files (from either GenshinToolkit or the official launcher"
-                              Content="Delete temporary download files" HorizontalAlignment="Left" Margin="267,106,0,0" VerticalAlignment="Top" Width="254"/>
-                    <ComboBox x:Name="fixVersion_cb" HorizontalAlignment="Left" Margin="401,74,0,0" VerticalAlignment="Top" Width="120" Height="26"/>
-                    <Label x:Name="fix_gameversion_lbl" Content="Current Game Version:" HorizontalAlignment="Left" Margin="267,74,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="fix_rewrite_config_chk" ToolTip="Rewrite the game's config.ini. Necessary for the game version to be correctly determined by GenshinToolkit and the official launcher"
-                              Content="Rewrite config.ini" HorizontalAlignment="Left" Height="20" Margin="267,186,0,0" VerticalAlignment="Top" Width="254" IsChecked="True"/>
-                    <Button x:Name="fix_button" Content="Do it!" HorizontalAlignment="Center" Height="60" Margin="-3,223,0,0" VerticalAlignment="Top" Width="250" Click="fix_button_Click"/>
-                    <CheckBox x:Name="fix_remove_deprecated" ToolTip="Remove old downloaded game files" 
-                              Content="Remove deprecated (old) update files" HorizontalAlignment="Left" Margin="267,126,0,0" VerticalAlignment="Top" Width="254"/>
-                    <CheckBox x:Name="fix_resetSettings_chk" ToolTip="Clear Genshin's registry keys, which clear all silly graphics settings you may have set and logs you out"
-                              Content="Reset game settings (Clear registry keys)" HorizontalAlignment="Left" Margin="267,146,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="fix_delete_gamedata" ToolTip="Clear the game's temporary data, including the in-game browser cache"
-                              Content="Delete temporary game data" HorizontalAlignment="Left" Margin="267,166,0,0" VerticalAlignment="Top"/>
+                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FFE5E5E5">
+                    <StackPanel Background="#FFE5E5E5" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type CheckBox}">
+                                <Setter Property="Margin" Value="0,0,0,5"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <DockPanel Margin="0,0,0,10">
+                            <Label x:Name="fix_gameversion_lbl" HorizontalAlignment="Left" Content="Current Game Version:"/>
+                            <ComboBox x:Name="fixVersion_cb"/>
+                        </DockPanel>
+                        <CheckBox x:Name="fix_rem_tmp_chk" ToolTip="Remove old and partially downloaded update files (from either GenshinToolkit or the official launcher"
+                            Content="Delete temporary download files"/>
+                        <CheckBox x:Name="fix_rewrite_config_chk" ToolTip="Rewrite the game's config.ini. Necessary for the game version to be correctly determined by GenshinToolkit and the official launcher"
+                            Content="Rewrite config.ini" IsChecked="True"/>
+                        <CheckBox x:Name="fix_remove_deprecated" ToolTip="Remove old downloaded game files" 
+                            Content="Remove deprecated (old) update files"/>
+                        <CheckBox x:Name="fix_resetSettings_chk" ToolTip="Clear Genshin's registry keys, which clear all silly graphics settings you may have set and logs you out"
+                            Content="Reset game settings (Clear registry keys)"/>
+                        <CheckBox x:Name="fix_delete_gamedata" ToolTip="Clear the game's temporary data, including the in-game browser cache"
+                            Content="Delete temporary game data"/>
+                        <Button x:Name="fix_button" Content="Do it!" Click="fix_button_Click" Margin="0,10,0,0"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
             <TabItem Header="Play">
-                <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Top" Margin="0,0,0,0">
+                <Grid Background="#FFE5E5E5" VerticalAlignment="Stretch" Margin="0,0,0,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="LaunchBtn" Content="Launch!" HorizontalAlignment="Center" Height="60" Margin="267,0,269,112" VerticalAlignment="Bottom" Width="250" Click="LaunchBtn_Click" RenderTransformOrigin="0.5,0.5"/>
-                    <CheckBox x:Name="graphicsConfigChk" ToolTip="Open the Unity configuration screen, which allows you to set controller bindings" Content="Open Unity Configuration" HorizontalAlignment="Left" Margin="267,126,0,0" VerticalAlignment="Top" Width="250"/>
-                    <CheckBox x:Name="closeAppChk" ToolTip="Close GenshinToolkit after the game starts" Content="Close this app" HorizontalAlignment="Left" Margin="267,146,0,0" VerticalAlignment="Top" Width="250"/>
-                    <CheckBox x:Name="play_borderless_chk" ToolTip="Open the game in a borderless (undecorated) window" Content="Open in a borderless window" HorizontalAlignment="Left" Margin="267,86,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.239,0.133"/>
-                    <CheckBox x:Name="play_custom_res_chk" ToolTip="Set a custom resolution for the game" Content="Custom Resolution" HorizontalAlignment="Left" Margin="267,166,0,0" VerticalAlignment="Top" Checked="play_custom_res_chk_Checked" Unchecked="play_custom_res_chk_Unchecked"/>
-                    <CheckBox x:Name="play_fullscreen_chk" ToolTip="Start the game fullscreen"
-                              Content="Open fullscreen" HorizontalAlignment="Left" Margin="267,106,0,0" VerticalAlignment="Top"/>
-                    <Grid x:Name="play_custom_res_grid" Margin="267,190,269,177" IsEnabled="False" Visibility="Hidden">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="347*" />
+                        <RowDefinition Height="42*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center" MinWidth="300" Height="204" Width="300">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type CheckBox}">
+                                <Setter Property="Margin" Value="0,0,0,5"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <CheckBox x:Name="play_borderless_chk" ToolTip="Open the game in a borderless (undecorated) window" Content="Open in a borderless window"/>
+                        <CheckBox x:Name="play_fullscreen_chk" ToolTip="Start the game fullscreen"
+                            Content="Open fullscreen"/>
+                        <CheckBox x:Name="graphicsConfigChk" ToolTip="Open the Unity configuration screen, which allows you to set controller bindings" Content="Open Unity Configuration"/>
+                        <CheckBox x:Name="closeAppChk" ToolTip="Close GenshinToolkit after the game starts" Content="Close this app"/>
+                        <CheckBox x:Name="play_custom_res_chk" ToolTip="Set a custom resolution for the game" Content="Custom Resolution" Checked="play_custom_res_chk_Checked" Unchecked="play_custom_res_chk_Unchecked"/>
+                        <Grid x:Name="play_custom_res_grid" IsEnabled="False" Visibility="Hidden" Margin="0,10,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Column="0" Margin="10,0,10,0">
+                                <TextBlock x:Name="play_w_lbl" TextWrapping="Wrap" Text="Width:" FontSize="14"/>
+                                <TextBox x:Name="play_w_textbox" ToolTip="Width in pixels" TextWrapping="NoWrap" PreviewTextInput="custom_res_textbox_PreviewTextInput" DockPanel.Dock="Right" Margin="10,0,0,0" />
+                            </DockPanel>
+                            <DockPanel Grid.Column="1" Margin="10,0,10,0">
+                                <TextBlock x:Name="play_h_lbl" TextWrapping="Wrap" Text="Height:" FontSize="14"/>
+                                <TextBox x:Name="play_h_textbox" ToolTip="Height in pixels" TextWrapping="NoWrap" PreviewTextInput="custom_res_textbox_PreviewTextInput" DockPanel.Dock="Right" Margin="10,0,0,0"/>
+                            </DockPanel>
+                        </Grid>
+                        <Button x:Name="LaunchBtn" Content="Launch!" Height="60" Click="LaunchBtn_Click" RenderTransformOrigin="0.5,0.5" Margin="0,15,0,0"/>
+                    </StackPanel>
+                    <Grid VerticalAlignment="Center" Grid.Row="1" Margin="10,0,10,0">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="13*"/>
-                            <ColumnDefinition Width="13*"/>
+                            <ColumnDefinition Width="109*" />
+                            <ColumnDefinition Width="605*" />
+                            <ColumnDefinition Width="60*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="play_w_textbox" ToolTip="Width in pixels" HorizontalAlignment="Left" Height="23" Margin="64,0,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="51" PreviewTextInput="custom_res_textbox_PreviewTextInput"/>
-                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Width:" VerticalAlignment="Top" RenderTransformOrigin="0.224,-0.062" Height="23" Width="59" FontSize="14"/>
-                        <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="10,1,0,0" TextWrapping="Wrap" Text="Height:" VerticalAlignment="Top" Height="22" Width="61" Grid.Column="1" FontSize="14"/>
-                        <TextBox x:Name="play_h_textbox" ToolTip="Height in pixels" HorizontalAlignment="Left" Height="23" Margin="76,0,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="49" Grid.Column="1" PreviewTextInput="custom_res_textbox_PreviewTextInput"/>
+                        <Grid.Resources>
+                            <Style TargetType="{x:Type DockPanel}">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </Grid.Resources>
+                        <TextBlock x:Name="statusText" TextWrapping="Wrap" Text="Server Status:" Grid.Column="0"/>
+                        <Grid Grid.Column="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <DockPanel Grid.Column="0">
+                                <TextBlock x:Name="play_as_status_lbl" TextWrapping="Wrap" Text="Asia:" HorizontalAlignment="Right"/>
+                                <CheckBox x:Name="play_as_status_chk" Content="Unknown" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on" Width="71" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                            </DockPanel>
+                            <DockPanel Grid.Column="1">
+                                <TextBlock x:Name="play_eu_status_lbl" TextWrapping="Wrap" Text="Europe:" HorizontalAlignment="Right"/>
+                                <CheckBox x:Name="play_eu_status_chk" Content="Unknown" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on" Width="71" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                            </DockPanel>
+                            <DockPanel Grid.Column="2">
+                                <TextBlock x:Name="play_na_status_lbl" TextWrapping="Wrap" Text="NA:" HorizontalAlignment="Right"/>
+                                <CheckBox x:Name="play_na_status_chk" Content="Unknown" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on" Width="71" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                            </DockPanel>
+                            <DockPanel Grid.Column="3">
+                                <TextBlock x:Name="play_tw_status_lbl" TextWrapping="Wrap" Text="SAR:" HorizontalAlignment="Right"/>
+                                <CheckBox x:Name="play_tw_status_chk" Content="Unknown" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on" Width="71" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                            </DockPanel>
+                        </Grid>
+                        <Button x:Name="play_refreshStatus_btn" Content="🔄" Click="play_refreshStatus_btn_Click" Grid.Column="2" Width="30" HorizontalAlignment="Right"/>
                     </Grid>
-                    <CheckBox x:Name="play_as_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="168,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
-                    <CheckBox x:Name="play_eu_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="328,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
-                    <CheckBox x:Name="play_na_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="490,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
-                    <CheckBox x:Name="play_tw_status_chk" Content="Unknown" HorizontalAlignment="Left" Margin="651,349,0,0" VerticalAlignment="Top" IsHitTestVisible="False" IsTabStop="False" ToolTip="Ping to AliCloud servers, which Genshin's hosted on"/>
-                    <TextBlock x:Name="play_as_status_lbl" HorizontalAlignment="Left" Margin="114,349,0,0" TextWrapping="Wrap" Text="Asia:" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="play_eu_status_lbl" HorizontalAlignment="Left" Margin="274,349,0,0" TextWrapping="Wrap" Text="Europe:" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="play_na_status_lbl" HorizontalAlignment="Left" Margin="436,349,0,0" TextWrapping="Wrap" Text="NA:" VerticalAlignment="Top" RenderTransformOrigin="0.466,1.942"/>
-                    <TextBlock x:Name="play_tw_status_lbl" HorizontalAlignment="Left" Margin="597,348,0,0" TextWrapping="Wrap" Text="SAR:" VerticalAlignment="Top"/>
-                    <TextBlock x:Name="statusText" HorizontalAlignment="Left" Margin="17,348,0,0" TextWrapping="Wrap" Text="Server Status:" VerticalAlignment="Top"/>
-                    <Button x:Name="play_refreshStatus_btn" Content="🔄" HorizontalAlignment="Left" Margin="742,346,0,0" VerticalAlignment="Top" Click="play_refreshStatus_btn_Click"/>
-
                 </Grid>
             </TabItem>
             <TabItem Header="Misc. Tools">
-                <Grid Background="#FFE5E5E5" Height="390" VerticalAlignment="Top" Margin="0,0,0,0">
-                    <Button x:Name="misc_reset_network" ToolTip="Reset Windows's networking configurations"
-                            Content="Reset Windows Networking" HorizontalAlignment="Center" Margin="258,110.1,258,259.94" VerticalAlignment="Center" Width="270" Click="misc_reset_network_Click"/>
-                    <Button x:Name="misc_dump_dxdiag" ToolTip="Dump DirectX's info, which includes a lot of useful system info for troubleshooting"
-                            Content="Dump system DirectX info" HorizontalAlignment="Center" Height="20" Margin="258,135.06,258,234.94" VerticalAlignment="Center" Width="270" Click="misc_dump_dxdiag_Click"/>
-                    <Button x:Name="misc_msvc_install" ToolTip="Reinstall Microsoft's Visual C++ runtime, which is necessary for the official launcher and the game to work"
-                            Content="Reinstall MSVC Runtime" HorizontalAlignment="Center" Margin="258,160.06,258,209.98" VerticalAlignment="Center" Width="270" Click="misc_msvc_install_Click"/>
-                    <Button x:Name="misc_reinstall_DirectX" ToolTip="Reinstall DirectX runtime components. Do this if the game crashes upon startup"
-                            Content="Reinstall DirectX Runtime" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="270" Click="misc_reinstall_DirectX_Click"/>
-                    <Button x:Name="misc_checkGameFileHashes" ToolTip="Verifies game file hashes to make sure they are still good to go"
-                            Content="Check game files hashes" HorizontalAlignment="Center" Margin="0,209.98,0,160.06" VerticalAlignment="Center" Width="270" Click="misc_checkGameFileHashes_Click"/>
-                    <Button x:Name="misc_update_info_uri" ToolTip="Change where version info are fetched from"
-                            Content="Change update info URI" HorizontalAlignment="Center" Margin="258,234.94,258,135.1" VerticalAlignment="Center" Width="270" Click="misc_update_info_uri_Click"/>
-                    <Button x:Name="misc_self_destruct_btn" ToolTip="INITIATE SELF DESTRUCTION."
-                            Content="Nuke this app's settings" HorizontalAlignment="Center" Height="20" Margin="258,259.9,258,110.1" VerticalAlignment="Center" Width="270" Click="misc_self_destruct_btn_Click"/>
-                    <TextBlock x:Name="BuildString" HorizontalAlignment="Right" Margin="0,364.04,10,10" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Width="199" Text="build_string" MouseLeftButtonUp="BuildString_MouseLeftButtonUp"/>
-                    <Button x:Name="misc_hoyolab_checkin" Content="HoyoLab Check-in" ToolTip="Checks in on HoyoLab automatically. Use with caution."
-                            HorizontalAlignment="Center" Height="20" Margin="258,85,258,285" VerticalAlignment="Center" Width="270" Click="misc_hoyolab_checkin_Click"/>
+                <Grid Background="#FFE5E5E5" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="357*" />
+                        <RowDefinition Height="32*" />
+                    </Grid.RowDefinitions>
+                    <StackPanel HorizontalAlignment="Center" Orientation="Vertical" VerticalAlignment="Center" Height="200" Width="270">
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type Button}">
+                                <Setter Property="Margin" Value="0,5,0,0"/>
+                            </Style>
+                        </StackPanel.Resources>
+                        <Button x:Name="misc_hoyolab_checkin" Content="HoyoLab Check-in" ToolTip="Checks in on HoyoLab automatically. Use with caution."
+                            Height="20" Width="270" Click="misc_hoyolab_checkin_Click"/>
+                        <Button x:Name="misc_reset_network" ToolTip="Reset Windows's networking configurations"
+                            Content="Reset Windows Networking" Width="270" Click="misc_reset_network_Click"/>
+                        <Button x:Name="misc_dump_dxdiag" ToolTip="Dump DirectX's info, which includes a lot of useful system info for troubleshooting"
+                            Content="Dump system DirectX info" Height="20" Width="270" Click="misc_dump_dxdiag_Click"/>
+                        <Button x:Name="misc_msvc_install" ToolTip="Reinstall Microsoft's Visual C++ runtime, which is necessary for the official launcher and the game to work"
+                            Content="Reinstall MSVC Runtime" Width="270" Click="misc_msvc_install_Click"/>
+                        <Button x:Name="misc_reinstall_DirectX" ToolTip="Reinstall DirectX runtime components. Do this if the game crashes upon startup"
+                            Content="Reinstall DirectX Runtime" Width="270" Click="misc_reinstall_DirectX_Click"/>
+                        <Button x:Name="misc_checkGameFileHashes" ToolTip="Verifies game file hashes to make sure they are still good to go"
+                            Content="Check game files hashes" Width="270" Click="misc_checkGameFileHashes_Click"/>
+                        <Button x:Name="misc_update_info_uri" ToolTip="Change where version info are fetched from"
+                            Content="Change update info URI" Width="270" Click="misc_update_info_uri_Click"/>
+                        <Button x:Name="misc_self_destruct_btn" ToolTip="INITIATE SELF DESTRUCTION."
+                            Content="Nuke this app's settings" Height="20" Width="270" Click="misc_self_destruct_btn_Click"/>
+                    </StackPanel>
+                    <TextBlock x:Name="BuildString" HorizontalAlignment="Right" Margin="0,0,10,0" TextAlignment="Right" TextWrapping="Wrap" VerticalAlignment="Center" Text="build_string" MouseLeftButtonUp="BuildString_MouseLeftButtonUp" Grid.Row="1" Height="16"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <TextBox x:Name="GameDirBox" HorizontalAlignment="Left" Height="23" Margin="106,6,0,0" TextWrapping="Wrap" Text="None" VerticalAlignment="Top" Width="559" IsEnabled="False"/>
-        <Button x:Name="BrowseFiles" Content="Browse..." HorizontalAlignment="Left" Margin="683,6,0,0" VerticalAlignment="Top" Width="77" Height="23" Click="Browsebutton_Click"/>
-        <Label x:Name="label" Content="Game Folder:" HorizontalAlignment="Left" Margin="18,3,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
