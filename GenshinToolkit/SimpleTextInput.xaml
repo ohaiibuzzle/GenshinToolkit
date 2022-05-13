@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="SimpleTextInput" Height="300" Width="500">
+        Title="SimpleTextInput" MinHeight="300" MinWidth="500" Height="300" Width="500">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="62*" />
+            <RowDefinition Height="9*" />
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="246*"/>
-            <ColumnDefinition Width="246*"/>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <Button x:Name="OKButton" Content="OK" HorizontalAlignment="Left" Height="29" Margin="140,230,0,0" VerticalAlignment="Top" Width="96" Click="OKButton_Click"/>
-        <Button x:Name="CancelButton" Content="Cancel" HorizontalAlignment="Left" Height="29" Margin="10,230,0,0" VerticalAlignment="Top" Width="96" Grid.Column="1" Click="CancelButton_Click"/>
-        <TextBox x:Name="textBox" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="215" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="472"/>
+        <TextBox x:Name="textBox" TextWrapping="Wrap" Text="TextBox" Grid.ColumnSpan="2" Margin="5,5,5,5"/>
+        <Button x:Name="OKButton" Content="OK" Height="29" Width="96" Click="OKButton_Click" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="0" Grid.Row="1" Margin="0,0,20,0"/>
+        <Button x:Name="CancelButton" Content="Cancel" Height="29" Width="96" Click="CancelButton_Click" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.Column="1" Grid.Row="1" Margin="20,0,0,0"/>
     </Grid>
 </Window>

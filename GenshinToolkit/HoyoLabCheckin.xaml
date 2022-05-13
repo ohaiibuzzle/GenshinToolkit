@@ -5,25 +5,74 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenshinToolkit"
         mc:Ignorable="d"
-        Title="HoyoLab Check-in" Height="440" Width="464" ResizeMode="NoResize">
-    <Grid>
-        <TextBox x:Name="cookies_tb" ToolTip="Your cookie to HoyoLab. Get this from your browser's developer panel" 
-                 HorizontalAlignment="Left" Height="143" Margin="10,38,0,0" TextWrapping="Wrap" Text="" 
-                 VerticalAlignment="Top" Width="436" GotFocus="cookies_tb_GotFocus"/>
-        <Label x:Name="cookies_lbl" Content="Your cookies for HoyoLab:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <CheckBox x:Name="chk_remember_cookies" ToolTip="Remember these information so you don't have to key them in. DO NOT USE ON DEVICES YOU CANNOT TRUST"
-                  Content="Remember these (BE CAREFUL)" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top" Checked="chk_remember_cookies_Checked"/>
-        <Button x:Name="Ok_btn" Content="OK" HorizontalAlignment="Center" Margin="-100,0,0,10" VerticalAlignment="Bottom" Width="75" Click="Ok_btn_Click"/>
-        <Button x:Name="Cancel_btn" Content="Close" HorizontalAlignment="Center" Margin="0,0,-100,10" VerticalAlignment="Bottom" Width="75" RenderTransformOrigin="-0.498,1.629" Click="Cancel_btn_Click"/>
-        <TextBox x:Name="eventid_tb" ToolTip="An EventID, you can typically get this from the URL"
-                 HorizontalAlignment="Left" Height="23" Margin="10,207,0,0" TextWrapping="Wrap" Text="e2147483648" VerticalAlignment="Top" Width="436"/>
-        <Label x:Name="eventid_label" Content="Event ID" HorizontalAlignment="Left" Margin="10,181,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="StatusLabel" HorizontalAlignment="Left" Height="31" Margin="139.506,345.033,0,0" VerticalAlignment="Top" Width="176" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content=""/>
-        <CheckBox x:Name="auto_checkin" ToolTip="Automatically performs the checkin when you start Toolkit."
-                  Content="Attempt check-in on Toolkit startup" IsEnabled="False" HorizontalAlignment="Left" Margin="225,295,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="UserAgent_label" Content="UserAgent:" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="useragent_tb" ToolTip="A string that is a browser's UserAgent. Get this by searching for 'What is my user agant'. Should be updated every once in a while to avoid shenanigans."
-                 HorizontalAlignment="Left" Height="23" Margin="10,261,0,0" TextWrapping="Wrap" Text="Something/Version" VerticalAlignment="Top" Width="436"/>
+        Title="HoyoLab Check-in" MinHeight="440" MinWidth="480" Height="440" Width="480">
+    <Grid Margin="5,5,5,5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="136*" />
+            <RowDefinition Height="56*" />
+            <RowDefinition Height="127*" />
+            <RowDefinition Height="21*" />
+            <RowDefinition Height="74*" />
+        </Grid.RowDefinitions>
+        <Grid.Resources>
+            <Style TargetType="{x:Type Grid}">
+                <Setter Property="Margin" Value="0,5,0,0"/>
+            </Style>
+        </Grid.Resources>
+        <Grid Grid.Row="0" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label x:Name="cookies_lbl" Content="Your cookies for HoyoLab:" Grid.Row="0"/>
+            <TextBox x:Name="cookies_tb" ToolTip="Your cookie to HoyoLab. Get this from your browser's developer panel" 
+                TextWrapping="Wrap" Text=""
+                GotFocus="cookies_tb_GotFocus" Grid.Row="1"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label x:Name="eventid_label" Content="Event ID" Grid.Row="0"/>
+            <TextBox x:Name="eventid_tb" ToolTip="An EventID, you can typically get this from the URL"
+                TextWrapping="Wrap" Text="e2147483648" Grid.Row="1"/>
+        </Grid>
+        <Grid Grid.Row="2" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="27" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Label x:Name="UserAgent_label" Content="UserAgent:" Grid.Row="0"/>
+            <TextBox x:Name="useragent_tb" ToolTip="A string that is a browser's UserAgent. Get this by searching for 'What is my user agant'. Should be updated every once in a while to avoid shenanigans."
+                TextWrapping="Wrap" Text="Something/Version" Grid.Row="1"/>
+
+        </Grid>
+        <Grid Grid.Row="3" Margin="0,5,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <CheckBox x:Name="chk_remember_cookies" ToolTip="Remember these information so you don't have to key them in. DO NOT USE ON DEVICES YOU CANNOT TRUST"
+                Content="Remember these (BE CAREFUL)" Checked="chk_remember_cookies_Checked" Grid.Column="0" HorizontalAlignment="Center"/>
+            <CheckBox x:Name="auto_checkin" ToolTip="Automatically performs the checkin when you start Toolkit."
+                Content="Attempt check-in on Toolkit startup" IsEnabled="False" Grid.Column="1" HorizontalAlignment="Center"/>
+
+        </Grid>
+        <Grid Grid.Row="4" Margin="0,5,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="StatusLabel" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Content="" Grid.ColumnSpan="2"/>
+            <Button x:Name="Ok_btn" Content="OK" HorizontalAlignment="Right" VerticalAlignment="Center" Click="Ok_btn_Click" Grid.Row="1" MinHeight="29" MinWidth="100" Margin="0,0,20,0"/>
+            <Button x:Name="Cancel_btn" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Center" Click="Cancel_btn_Click" Grid.Row="1" Grid.Column="2" MinHeight="29" MinWidth="100" Margin="20,0,0,0"/>
+
+        </Grid>
 
     </Grid>
 </Window>
