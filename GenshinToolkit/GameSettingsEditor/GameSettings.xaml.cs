@@ -183,7 +183,7 @@ namespace GenshinToolkit
                     BloomCb.SelectedIndex = 1;
                     CrowdCb.SelectedIndex = 1;
                     SSScaterCb.SelectedIndex = 0;
-                    TeamEffectsCb.SelectedIndex = 0;
+                    TeamEffectsCb.SelectedIndex = 2;
                     AFCb.SelectedIndex = 0;
                     break;
                 case 1:
@@ -201,7 +201,7 @@ namespace GenshinToolkit
                     BloomCb.SelectedIndex = 1;
                     CrowdCb.SelectedIndex = 1;
                     SSScaterCb.SelectedIndex = 0;
-                    TeamEffectsCb.SelectedIndex = 0;
+                    TeamEffectsCb.SelectedIndex = 2;
                     AFCb.SelectedIndex = 0;
                     break;
                 case 2:
@@ -219,7 +219,7 @@ namespace GenshinToolkit
                     BloomCb.SelectedIndex = 1;
                     CrowdCb.SelectedIndex = 1;
                     SSScaterCb.SelectedIndex = 1;
-                    TeamEffectsCb.SelectedIndex = 1;
+                    TeamEffectsCb.SelectedIndex = 0;
                     AFCb.SelectedIndex = 0;
                     break;
                 case 3:
@@ -237,7 +237,7 @@ namespace GenshinToolkit
                     BloomCb.SelectedIndex = 1;
                     CrowdCb.SelectedIndex = 1;
                     SSScaterCb.SelectedIndex = 1;
-                    TeamEffectsCb.SelectedIndex = 1;
+                    TeamEffectsCb.SelectedIndex = 0;
                     AFCb.SelectedIndex = 0;
                     break;
             }
