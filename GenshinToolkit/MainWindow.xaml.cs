@@ -157,7 +157,15 @@ namespace GenshinToolkit
         private void GameSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
             var settingsWindow = new GameSettings();
-            settingsWindow.Show();
+            // Check if the window still exist
+            try
+            {
+                settingsWindow.ShowDialog();
+            }
+            catch (InvalidOperationException)
+            {
+                // Window was closed
+            }
         }
 
         private void Download_btn_click(object sender, RoutedEventArgs e)
