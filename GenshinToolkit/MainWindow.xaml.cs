@@ -157,7 +157,7 @@ namespace GenshinToolkit
         private void GameSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
             var settingsWindow = new GameSettings();
-            settingsWindow.ShowDialog();
+            settingsWindow.Show();
         }
 
         private void Download_btn_click(object sender, RoutedEventArgs e)
@@ -457,8 +457,15 @@ namespace GenshinToolkit
 
                 if (fix_resetSettings_chk.IsChecked == true)
                 {
-                    Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\miHoYo");
-                    Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\miHoYoSDK");
+                    try
+                    {
+                        Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\miHoYo");
+                        Registry.CurrentUser.DeleteSubKeyTree(@"SOFTWARE\miHoYoSDK");
+                    }
+                    catch (Exception)
+                    {
+                        ;
+                    }
                 }
 
                 if (fix_delete_gamedata.IsChecked == true)

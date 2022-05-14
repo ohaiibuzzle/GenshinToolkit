@@ -29,6 +29,7 @@ namespace GenshinToolkit
             {
                 MessageBox.Show("The registry key could not be found.\n\nTry starting the game once", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 this.Close();
+                return;
             }
             var values = targetKey.GetValueNames();
 
@@ -48,6 +49,7 @@ namespace GenshinToolkit
             {
                 MessageBox.Show("Could not find the key for the game settings.");
                 this.Close();
+                return;
             }
             LoadGraphicsSettings();
         }
