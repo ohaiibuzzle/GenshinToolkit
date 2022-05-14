@@ -154,6 +154,12 @@ namespace GenshinToolkit
             Properties.Settings.Default.CustomResEnabled = false;
         }
 
+        private void GameSettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var settingsWindow = new GameSettings();
+            settingsWindow.ShowDialog();
+        }
+
         private void Download_btn_click(object sender, RoutedEventArgs e)
         {    
 

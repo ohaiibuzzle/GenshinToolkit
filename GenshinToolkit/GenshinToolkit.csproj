@@ -81,6 +81,11 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GameSettingsEditor\GameSettings.xaml.cs">
+      <DependentUpon>GameSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameSettingsEditor\GenshinSettingsEnums.cs" />
+    <Compile Include="GameSettingsEditor\GenshinSettings.cs" />
     <Compile Include="HoyoLabCheckin.xaml.cs">
       <DependentUpon>HoyoLabCheckin.xaml</DependentUpon>
     </Compile>
@@ -100,6 +105,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="GameSettingsEditor\GameSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="HoyoLabCheckin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

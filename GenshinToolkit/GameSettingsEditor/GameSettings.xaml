@@ -1,0 +1,184 @@
+﻿<Window x:Class="GenshinToolkit.GameSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GenshinToolkit"
+        mc:Ignorable="d"
+        Title="Game Settings Editor" MinHeight="480" MinWidth="800" Height="480" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="59*" />
+            <RowDefinition Height="405*" />
+            <RowDefinition Height="59*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid Margin="15,10,15,0" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="PresetLbl" Content="Graphics Preset" VerticalAlignment="Center"/>
+            <ComboBox x:Name="PresetCb" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="140" SelectionChanged="PresetCb_SelectionChanged"/>
+        </Grid>
+        <StackPanel Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Height="288">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Margin" Value="15,10,15,0" />
+                </Style>
+                <Style TargetType="{x:Type ComboBox}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="VSyncLabel" Content="V-Sync"/>
+                <ComboBox x:Name="VSyncCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="RRLabel" Content="Render Resolution"/>
+                <ComboBox x:Name="RRCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="ShadowQLabel" Content="Shadow Quality"/>
+                <ComboBox x:Name="ShadowQCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140" SelectionChanged="ShadowQCb_SelectionChanged"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="VFXLabel" Content="Visual Effects Quality"/>
+                <ComboBox x:Name="VFXCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="SFXLabel" Content="Special Effects Quality"/>
+                <ComboBox x:Name="SFXCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="EnvDetailLabel" Content="Environment Detail"/>
+                <ComboBox x:Name="EnvDetailCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="FPSLabel" Content="FPS"/>
+                <ComboBox x:Name="FPSCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="AALabel" Content="Anti-Aliasing"/>
+                <ComboBox x:Name="AACb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+        </StackPanel>
+        <StackPanel Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Height="288">
+            <StackPanel.Resources>
+                <Style TargetType="{x:Type Grid}">
+                    <Setter Property="Margin" Value="15,10,15,0" />
+                </Style>
+                <Style TargetType="{x:Type ComboBox}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="VerticalAlignment" Value="Center"/>
+                </Style>
+            </StackPanel.Resources>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="VFogLabel" Content="Volumetric Fog"/>
+                <ComboBox x:Name="VFogCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="ReflectionLabel" Content="Reflections"/>
+                <ComboBox x:Name="ReflectionCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="MotionBlurLabel" Content="Motion Blur"/>
+                <ComboBox x:Name="MotionBlurCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="BloomLabel" Content="Bloom"/>
+                <ComboBox x:Name="BloomCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="CrowdLabel" Content="Crowd Density"/>
+                <ComboBox x:Name="CrowdCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="TeamEffectsLabel" Content="Co-Op Teammate Effects"/>
+                <ComboBox x:Name="TeamEffectsCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="SSScaterLabel" Content="Subsurface Scattering"/>
+                <ComboBox x:Name="SSScaterCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label x:Name="AFLabel" Content="Anisotropic Filtering"/>
+                <ComboBox x:Name="AFCb" Grid.Column="1" HorizontalAlignment="Right" MinWidth="140"/>
+            </Grid>
+        </StackPanel>
+        <Button x:Name="SaveBtn" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="15,0,0,0" Width="140" Height="30" Content="Save" Click="SaveBtn_Click"/>
+        <Button x:Name="CancelBtn" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,15,0" Width="140" Height="30" Content="Close" Click="CancelBtn_Click"/>
+    </Grid>
+</Window>
