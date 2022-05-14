@@ -25,7 +25,11 @@ namespace GenshinToolkit
 
             // Read the registry key
             RegistryKey targetKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\miHoYo\Genshin Impact");
-            if (targetKey == null) return;
+            if (targetKey == null)
+            {
+                MessageBox.Show("The registry key could not be found.\n\nTry starting the game once", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                this.Close();
+            }
             var values = targetKey.GetValueNames();
 
             // Find the subkey starting with "GENERAL_DATA"
@@ -43,7 +47,7 @@ namespace GenshinToolkit
             if (generalDataKey == "")
             {
                 MessageBox.Show("Could not find the key for the game settings.");
-                return;
+                this.Close();
             }
             LoadGraphicsSettings();
         }
