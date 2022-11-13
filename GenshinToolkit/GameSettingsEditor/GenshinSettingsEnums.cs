@@ -104,7 +104,7 @@ namespace GenshinToolkit.GameSettingsEditor
         {
             INVALID,
             Off,
-            TAA,
+            FSR2,
             SMAA,
         }
         public enum VolumetricFog
